@@ -106,13 +106,7 @@ $data = array();
 
 while ($row = mysqli_fetch_assoc($empRecords)) {   
 
-
-    $status=$row['status'];
-    if ($row['status']=='IN WAREHOUSE') {$status='<div style="font-weight:600; font-size:9px; color:white; padding:5px;width:80px; border:0.5px solid gray; background:#00a75a; ">'.$status.'</div>';}
-    elseif ($row['status']=='PENDING') {$status='<div style="font-weight:600; font-size:9px; color:white; padding:5px;width:80px; border:0.5px solid gray; background:#db4c39; ">'.$status.'</div>';}
-    elseif ($row['status']=='READY TO CONTACT') {$status='<div style="font-weight:600; font-size:9px; color:white; width:80px; padding:5px; border:0.5px solid gray; background:#00c2f0; ">'.$status.'</div>';}
-    elseif ($row['status']=='CHECK NOTES') {$status='<div style="font-weight:600; font-size:9px; color:purple; padding:5px;width:80px; border:0.5px solid gray; background:#a62c0d8; ">'.$status.'</div>';}
-    else{$status='<div style="font-weight:600; color:black;">'.$status.'</div>';}
+  
     
     $service=$row['service'];
     if ($service=='') {$service=' ';}
