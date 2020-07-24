@@ -106,8 +106,6 @@ $data = array();
 
 while ($row = mysqli_fetch_assoc($empRecords)) {   
 
-  
-    
     $service=$row['service'];
     if ($service=='') {$service=' ';}
     elseif ($service=='Air Service') {$service_img='<span style="position:relative; top:-5px;"><img src="./img/air.png" style="width:40px; position:relative; top:10px;"><br>';}
@@ -138,7 +136,7 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
         $data[] = array(
                 "fecha"=>$row['fecha'],
                 "id"=>$row['id'],
-                "client_name"=>$row['client_name'],
+                "client_name"=>utf8_encode($row['client_name']),
                 "origin"=>$row['origin'],
                 "destination"=>$row['destination'],
                 "service"=>$row['service'],

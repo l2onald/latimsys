@@ -44,7 +44,7 @@ $email = $_SESSION['username'];
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Latim Cargo & Trading | System</title>
   <meta name="viewport" content="width=device-width, initial-scale=0.86, maximum-scale=3.0, minimum-scale=0.86">
-  <link href='plugins/select2/select2.css' rel='stylesheet' type='text/css'>
+    <link href='plugins/select2/select2.css' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">    
     <link rel="stylesheet" href=" https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
@@ -105,9 +105,7 @@ $email = $_SESSION['username'];
       height: 30px;
     }
 
-    .card .form-group{
-      margin-bottom:0px !important;
-    }
+
     .add_form_field {
       background-color: #007F46;
       border: none;
@@ -214,37 +212,7 @@ $email = $_SESSION['username'];
       font-weight: 400;
     }
   </style>
-<style>
-.card{
-    border: 1px solid #D2D6DE;
-    padding: 15px;
-    margin-bottom:20px;
-}
-.col-item{
-    padding-left: 5px;
-    padding-right: 5px;
-}
-.item{
-    margin-left: 20px;
-}
-.btn_plus{
-    background-color: #007F46;
-    color: #fff;
-    font-weight: bold;
-    border-radius: 0px;
-}
-.item .form-group label{
-    font-size:11px;
-    text-align:center;
-}
-.btn_minus{
-    background-color: #DD4B39;
-    color: #fff;
-    font-weight: bold;
-    border-radius: 0px; 
-    width:34.19px
-}
-</style>
+
   <style type="text/css">
     a {
       color: #e0e0e0;
@@ -438,18 +406,7 @@ $email = $_SESSION['username'];
               <li><a href="searchQuotation.php" style="font-size:11px;"><i class="fa fa-circle-o"></i>Search</a></li>
             </ul>
           </li>
-          <li class=" treeview" style="border-bottom:1px solid gray; padding:5px;">
-            <a href="#" style="height:25px; position:relative; top:-10px;">
-                <i class="fa fa-home"></i> <span style="font-size:11px; ">Warehouse</span>
-                <span class="pull-right-container" style="top:22px;">
-                <i class="fa fa-angle-left pull-right"></i>
-                </span>
-            </a>
-            <ul class="treeview-menu">
-                <li ><a class="" href="createWarehouse.php" style="font-size:11px;"><i class="fa fa-circle-o"></i>Create</a></li>
-                <li><a href="searchAccount.php" style="font-size:11px;"><i class="fa fa-circle-o"></i>Search</a></li>
-            </ul>
-        </li>
+
 
           <center>
             <div
@@ -1072,9 +1029,7 @@ $email = $_SESSION['username'];
                     <div class="col-md-12">
                         <div class=" input-group">
                             <div class="input-group-addon"><i class="fa fa-circle input-fa"></i></div>
-                            <select data-placeholder="Select Agent" <?php if ($level!='Seller'){ ?> name="agent_name" <?php } ?>
-                      class="form-control select2" <?php if ($level=='Seller'){ ?> disabled <?php } ?>
-                      style="width:100%;">
+                                <select  id="" <?php if ($level!='Seller' ){ ?>    name="agent_name" <?php } ?> class="form-control select2"  <?php if ($level=='Seller'){ ?> disabled <?php } ?>  placeholder="Select Agent" style="width:100%">
                                     
                                     <?php 
                                         $consultaList = mysqli_query($connect, "SELECT * FROM agents ORDER BY name asc ") or die ("Error al traer los datos");
@@ -1095,26 +1050,7 @@ $email = $_SESSION['username'];
                         <div class="col-md-12">
                             <div class=" input-group">
                                 <div class="input-group-addon"><i class="fa fa-user input-fa"></i></div>
-                                <select data-placeholder="Select Client" name="client_name" class="form-control select2" style="width:100%;">
-
-                                  <option selected="selected" value="<?php echo $client_name; ?>"><?php echo $client_name; ?></option>
-                                  <?php 
-                                  if ($level=='Seller') { $consulta = mysqli_query($connect, "SELECT * FROM accounts WHERE agent='$agent_name' AND type='Client' ORDER BY name asc ") or die ("Error al traer los datos"); 
-                                  }else{
-                                    $consulta = mysqli_query($connect, "SELECT * FROM accounts WHERE type='Client' ORDER BY name asc ") or die ("Error al traer los datos");}
-
-                                    while ($row = mysqli_fetch_array($consulta)){ 
-                                        $company=$row['company'];
-                                        $name=$row['name'];
-
-                                        $customer_if= $name;
-                                        if ($company!='') { $customer_if .= ' | '.$company; }
-                                        if ($customer!=$customer_if){ ?>
-                                        <option value="<?php echo $customer_if; ?>"><?php echo $customer_if; ?></option>
-                                    <?php } ?>
-                                    <?php }  ?>
-
-                                </select>
+                                <input type="text" name="client_name" class="form-control" value="<?php echo $client_name; ?>" placeholder="Company Name">
                             </div>
                         </div>
                     </div>
@@ -1122,561 +1058,1063 @@ $email = $_SESSION['username'];
                         <div class="col-md-7">
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-calendar input-fa"></i></div>
-                                <input type="text" class="form-control" name="expiration_date" data-provide="datepicker" data-date-format="dd-mm-yyyy" laceholder="To"     placeholder="Expiration Date">
+                                <input type="text" class="form-control" name="expiration_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" laceholder="To"  value="<?php echo $expiration_date; ?>"    placeholder="Expiration Date">
                             </div>
                         </div>
                         <div class="col-md-5">
-                                <input type="text" class="form-control"  name="initial_date" data-provide="datepicker" data-date-format="dd-mm-yyyy" laceholder="To" value="<?php echo $fecha_vista; ?>"   placeholder="Initial Date">
+                                <input type="text" class="form-control"  name="initial_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" laceholder="To" value="<?php echo $initial_date; ?>"    placeholder="Initial Date">
                         </div>
                     </div>                    
                     <div class="form-group row">
                         <div class="col-md-7">
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-map-marker input-fa"></i></div>
-                                <select id="state2" class="form-control select2" name="origin" required="required" data-placeholder="Origin"  style="width:100%;">
-                                    <option></option>
-                                    <?php $consulta22 = mysqli_query($connect, "SELECT DISTINCT origin FROM quotations  ") or die ("Error al traer los datos");
-
-                                    while ($row = mysqli_fetch_array($consulta22)){ 
-                                    $origin=$row['origin'];
-                                    ?>
-                                    <option value="<?php echo $origin; ?>"><?php echo $origin; ?></option>
-
-                                    <?php } ?>
-
-                                  </select>
+                                <input type="text" class="form-control" name="origin" value="<?php echo $origin; ?>"  placeholder="Origin">
                             </div>
                         </div>
                         <div class="col-md-5">
-                                <select id="state3" class="form-control select2" name="destination" required="required" data-placeholder="Destination" style="width:100%;">
-                                <option></option>
-
-                                <?php $consulta22 = mysqli_query($connect, "SELECT DISTINCT destination FROM quotations  ") or die ("Error al traer los datos");
-
-                                while ($row = mysqli_fetch_array($consulta22)){ 
-                                $destination=$row['destination'];
-                                ?>
-                                <option value="<?php echo $destination; ?>"><?php echo $destination; ?></option>
-
-                                <?php } ?>
-
-                              </select>
+                            <input type="text" class="form-control"  name="destination" value="<?php echo $destination; ?>"   placeholder="Destination">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-12">
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-ship input-fa"></i></div>
-                                <select data-placeholder="Select Service" required="required" name="service" class="form-control select2" style="width:100%;">
-                                  <option></option>
-                                  <option value='FCL 20"'>FCL 20"</option>
-                                  <option value='FCL 40"'>FCL 40"</option>
-                                  <option value='FCL 40" HC'>FCL 40" HC</option>
+                                <select placeholder="Select Service" name="service" class="form-control select2" style="width:100%">
+                                    <option value="<?php echo $service; ?>"><?php echo $service; ?></option>
+
+                                    <?php if ($service!='Pending'){ ?>
+                                    <option value="Pending">Pending</option>
+                                    <?php } ?>
+
+                                    <?php if ($service!='Air door to door'){ ?>
+                                    <option value="Air door to door">Air door to door</option>
+                                    <?php } ?>
+
+                                    <?php if ($service!='Ocean door to door'){ ?>
+                                    <option value="Ocean door to door">Ocean door to door</option>
+                                    <?php } ?>
+
+                                    <?php if ($service!='LCL'){ ?>
+                                    <option value="LCL">LCL</option>
+                                    <?php } ?>
+
+                                    <?php if ($service!='Air'){ ?>
+                                    <option value="Air">Air</option>
+                                    <?php } ?>
+
+                                    <?php if ($service!='FCL 20\"'){ ?>
+                                    <option value='FCL 20\"'>FCL 20"</option>
+                                    <?php } ?>
+
+                                    <?php if ($service!='FCL 40\"'){ ?>
+                                    <option value='FCL 40\"'>FCL 40"</option>
+                                    <?php } ?>
+
+                                    <?php if ($service!='FCL 40\" HC'){ ?>
+                                    <option value='FCL 40\" HC'>FCL 40" HC</option>
+                                    <?php } ?>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <div class=" input-group">
-                            <div class="input-group-addon"><i class="fa fa-star input-fa"></i></div>
-                            <input type="number" name="containerQuantity" class="form-control" value="1"  placeholder="container Quantity">
-                        </div>
-                      </div>                      
-                    </div>
+                    <div class=" input-group">
+                                    <div class="input-group-addon"><i class="fa fa-star input-fa"></i></div>
+                                    <input type="number" name="containerQuantity" class="form-control" value="<?php echo $containerQuantity; ?>"  placeholder="container Quantity">
+                                </div>
                     <div class="form-group row">
                         <div class="col-md-12">
                             <div class=" input-group">
                                 <div class="input-group-addon"><i class="fa fa-cube input-fa"></i></div>
-                                <select id="state" class="form-control select2" name="commodity" data-placeholder="Commodity"  style="width:100%;">
-                                  <option> </option>
-                                  <?php $consulta22 = mysqli_query($connect, "SELECT DISTINCT commodity FROM joborders  ") or die ("Error al traer los datos");
-                                    while ($row = mysqli_fetch_array($consulta22)){ 
-                                    $commodity=$row['commodity'];
-                                    ?>
-                                  <option value="<?php echo $commodity; ?>"><?php echo $commodity; ?></option>
-                                  <?php }  ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-12">
-                            <div class=" input-group">
-                                <div class="input-group-addon"><i class="fa fa-money input-fa"></i></div>
-                                <input type="number" name="value" class="form-control" value=""  placeholder="Value">
+                                <input type="text" name="commodity" class="form-control" value="<?php echo $commodity; ?>" disabled placeholder="Commodity">
                             </div>
                         </div>
                     </div>
                 </div>  
-                <div class="col-md-6">
-                    <div class="card" id="freight_charges">
-                      <p>Freight Charges</p>
-                      <div class="item">
-                          <div class="form-group row" style="margin-bottom:0px;">
-                              <div class="col-md-4 col-item text-center">
-                                  <label for="">Description</label>
-                              </div>
-                              <div class="col-md-3 col-item text-center">
-                                  <label for="">Price</label>
-                              </div>
-                              <div class="col-md-3 col-item text-center">
-                                  <label for="">Quantity</label>
-                              </div>                               
-                          </div>
-                      </div> 
-                      
-                        <div class="item">
-                            <div class="form-group row">
-                                <div class="col-md-4 col-item">
-                                    <input type="text" name="freightDescX[]" value="" class="form-control">
-                                </div>
-                                <div class="col-md-3 col-item">
-                                    <input type="number" name="freightChargeX[]" value="" class="form-control">
-                                </div>
-                                <div class="col-md-3 col-item">
-                                    <input type="number" name="freightChargeQX[]" value="1" class="form-control">
-                                </div>
-                                <div class="col-md-1 col-item">
-                                    <?php if($key==0){ ?>
-                                        <button  type="button"  class="btn btn_plus">+</button>
-                                    <?php }else{ ?>
-                                        <button  type="button" class="btn btn_minus">-</button>
-                                    <?php } ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card" id="origin_charges">
-                        <p>Origin Charges</p>
-                        <div class="item">
-                            <div class="form-group row" style="margin-bottom:0px;">
-                                <div class="col-md-4 col-item text-center">
-                                   <label for="">Description</label>
-                                </div>
-                                <div class="col-md-3 col-item text-center">
-                                    <label for="">Price</label>
-                                </div>
-                                <div class="col-md-3 col-item text-center">
-                                    <label for="">Quantity</label>
-                                </div>                               
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="form-group row">
-                                <div class="col-md-4 col-item">
-                                    <input type="text" name="originDescX[]" value="" class="form-control">
-                                </div>
-                                <div class="col-md-3 col-item">
-                                    <input type="number" name="originChargeX[]" value="" class="form-control">
-                                </div>
-                                <div class="col-md-3 col-item">
-                                    <input type="number"  name="originChargeQX[]" value="1" class="form-control">
-                                </div>
-                                <div class="col-md-1 col-item">
-                                  <button  type="button"  class="btn btn_plus">+</button>
-                                </div>
-                            </div>
-                        </div>                                                
-                    </div>
-                    <div class="card" id="destination_charges">
-                        <p>Destination Charges</p>
-                        <div class="item">
-                            <div class="form-group row" style="margin-bottom:0px;">
-                                <div class="col-md-4 col-item text-center">
-                                   <label for="">Description</label>
-                                </div>
-                                <div class="col-md-3 col-item text-center">
-                                    <label for="">Price</label>
-                                </div>
-                                <div class="col-md-3 col-item text-center">
-                                    <label for="">Quantity</label>
-                                </div>                               
-                            </div>
-                        </div> 
-                        <div class="item">
-                            <div class="form-group row">
-                                <div class="col-md-4 col-item">
-                                    <input type="text" name="destinationDescX[]" value="" class="form-control">
-                                </div>
-                                <div class="col-md-3 col-item">
-                                    <input type="number" name="destinationChargeX[]" value="" class="form-control">
-                                </div>
-                                <div class="col-md-3 col-item">
-                                    <input type="number" name="destinationChargeQX[]" value="1" class="form-control">
-                                </div>
-                                <div class="col-md-1 col-item">                                        
-                                  <button  type="button"  class="btn btn_plus">+</button>                                          
-                                </div>
-                            </div>
-                        </div>          
-                    </div>
-                    <div class="card">
-                        <p>Remarks</p>
-                        <div class="item">
-                            <div class="form-group row">
-                                <div class="col-md-11 col-item">                                   
-                                   <textarea name="remarks" id="" cols="30" rows="10" class="form-control">A. COTIZACION ES BASADA EN TERMINO FOB DESDE BODEGA GUANGZHOU.
-B. TRANSITO APROX:  X Dias 
-C. NO INCLUYE SEGURO DE CARGA, NO INCLUYE AGENCIAMIENTO ADUANAL.</textarea>
-                                </div>
-                            </div>
-                        </div>                                        
-                    </div>
-                    <div class="from-group row">
-                      <div class="col-md-12 text-right">
-                        <button  type="submit" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Save</button>
-                      </div>
-                      
-                    </div>
-                </div>               
               </div>
             </form>
           </div>
 
         <?php } ?>
         <!--end step3 fcl -->
-        <!--start step3 Pieces -->
-        <?php if($option=='Pieces' && $step=='3'){ ?>
-          <div class="row searchPage shadow2"> 
-            <div class="col-md-12 ">             
-                  <h3 style="text-align:center; color:black; font-weight:400; padding-bottom:20px;font-size:20px; border-bottom:1px solid #555555;">By Pieces Quotation<br>
-                  </h3>
-            </div>
-            <form action="quotation.php" method="POST" style="padding: 100px 40px 20px 40px;">
-              <div class="row">            
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                        <div class=" input-group">
-                            <div class="input-group-addon"><i class="fa fa-circle input-fa"></i></div>
-                            <select data-placeholder="Select Agent" <?php if ($level!='Seller'){ ?> name="agent_name" <?php } ?>
+            <?php if ($option=='FCL' && $step=='3'){ ?>
+
+
+
+            <form action="quotation.php" method="POST">
+
+
+              <div class="form_1 shadow2"
+                style="width:1000px; margin-left:-500px; background:white; min-height:460px; margin-top:50px;">
+                <h3
+                  style="text-align:center; color:black; font-weight:400; padding:20px; font-size:20px; border-bottom:1px solid #555555;">
+                  FCL Quotation<br>
+                </h3>
+                <?php if ($message=='AccountSaved'){ ?>
+                <br>
+                <div id="mydiv"
+                  style="background-color: rgba(0, 127, 70, 1); padding:20px;color:white; position:absolute; left:50%; width:300px; margin-left:140px; top:-80px;">
+                  <center>
+                    <span style="font-style: oblique; ">Account has been created.</span>
+                  </center>
+                </div>
+                <?php }else{} ?>
+                <br>
+
+                <script type="text/javascript">
+                  setTimeout(fade_out, 3000);
+
+                  function fade_out() {
+                    $("#mydiv").fadeOut().empty();
+                  }
+                </script>
+
+                <div style="width:45%; padding:20px; margin-left:10px; margin-top:-40px; top:108px; position:absolute; display:inline-block; ">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i style="width:20px;" class="fa fa-circle"></i></span>
+                    <select data-placeholder="Select Agent" <?php if ($level!='Seller'){ ?> name="agent_name" <?php } ?>
                       class="form-control select2" <?php if ($level=='Seller'){ ?> disabled <?php } ?>
                       style="width:100%;">
-                                    
-                                    <?php 
-                                        $consultaList = mysqli_query($connect, "SELECT * FROM agents ORDER BY name asc ") or die ("Error al traer los datos");
-                                        while ($rowList = mysqli_fetch_array($consultaList)){ 
-                                        $agent_List=$rowList['name']; ?>
-                                    <option <?php if($agent_name==$rowList['name']){echo "selected";} ?> value="<?php echo $agent_List; ?>"><?php echo $agent_List; ?></option>
-                                        <?php }  ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+
+                      <option value="<?php echo $agent_name; ?>"><?php echo $agent_name; ?></option>
+
+                      <?php 
+
+                      $consultaList = mysqli_query($connect, "SELECT * FROM agents ORDER BY name asc ") or die ("Error al traer los datos");
+
+                        while ($rowList = mysqli_fetch_array($consultaList)){ 
+
+                        $agent_List=$rowList['name']; ?>
+
+
+                      <?php if ($agent_name!=$agent_List){ ?>
+
+                      <option value="<?php echo $agent_List; ?>"><?php echo $agent_List; ?></option>
+                      <?php } }  ?>
+
+                    </select>
+
+
                     <?php if ($level=='Seller'){ ?>
-                    <input type="hidden" name="agent_name" value="<?php echo $agent_name; ?>">
+                    <input type="text" name="agent_name" style="display:none;" value="<?php echo $agent_name; ?>">
                     <?php } ?>
 
-                    <input type="hidden" name="agent_email" value="<?php echo $email; ?>">
-                    <div class="form-group row">
-                        <div class="col-md-12">
-                            <div class=" input-group">
-                                <div class="input-group-addon"><i class="fa fa-user input-fa"></i></div>
-                                <select data-placeholder="Select Client" name="client_name" class="form-control select2" style="width:100%;">
+                  </div>
 
-                                  <option selected="selected" value="<?php echo $client_name; ?>"><?php echo $client_name; ?></option>
-                                  <?php 
-                                  if ($level=='Seller') { $consulta = mysqli_query($connect, "SELECT * FROM accounts WHERE agent='$agent_name' AND type='Client' ORDER BY name asc ") or die ("Error al traer los datos"); 
-                                  }else{
-                                    $consulta = mysqli_query($connect, "SELECT * FROM accounts WHERE type='Client' ORDER BY name asc ") or die ("Error al traer los datos");}
+                  <input style="display:none;" name="agent_email" value="<?php echo $email; ?>">
 
-                                    while ($row = mysqli_fetch_array($consulta)){ 
-                                        $company=$row['company'];
-                                        $name=$row['name'];
 
-                                        $customer_if= $name;
-                                        if ($company!='') { $customer_if .= ' | '.$company; }
-                                        if ($customer!=$customer_if){ ?>
-                                        <option value="<?php echo $customer_if; ?>"><?php echo $customer_if; ?></option>
-                                    <?php } ?>
-                                    <?php }  ?>
 
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-7">
-                            <div class="input-group">
-                                <div class="input-group-addon"><i class="fa fa-calendar input-fa"></i></div>
-                                <input type="text" class="form-control" name="expiration_date" data-provide="datepicker" data-date-format="dd-mm-yyyy" laceholder="To"     placeholder="Expiration Date">
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                                <input type="text" class="form-control"  name="initial_date" data-provide="datepicker" data-date-format="dd-mm-yyyy" laceholder="To" value="<?php echo $fecha_vista; ?>"   placeholder="Initial Date">
-                        </div>
-                    </div>                    
-                    <div class="form-group row">
-                        <div class="col-md-7">
-                            <div class="input-group">
-                                <div class="input-group-addon"><i class="fa fa-map-marker input-fa"></i></div>
-                                <select id="state2" class="form-control select2" name="origin" required="required" data-placeholder="Origin"  style="width:100%;">
-                                    <option></option>
-                                    <?php $consulta22 = mysqli_query($connect, "SELECT DISTINCT origin FROM quotations  ") or die ("Error al traer los datos");
+                  <div class="input-group" style="margin-top:20px;">
+                    <span class="input-group-addon"><i style="width:20px;" class="fa fa-user"></i></span>
+                    <select data-placeholder="Select Client" name="client_name" class="form-control select2"
+                      style="width:364px; ">
 
-                                    while ($row = mysqli_fetch_array($consulta22)){ 
-                                    $origin=$row['origin'];
-                                    ?>
-                                    <option value="<?php echo $origin; ?>"><?php echo $origin; ?></option>
+                      <option selected="selected" value="<?php echo $client_name; ?>"><?php echo $client_name; ?>
+                      </option>
+                      <?php 
 
-                                    <?php } ?>
 
-                                  </select>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                                <select id="state3" class="form-control select2" name="destination" required="required" data-placeholder="Destination" style="width:100%;">
-                                <option></option>
+                      if ($level=='Seller') { $consulta = mysqli_query($connect, "SELECT * FROM accounts WHERE agent='$agent_name' AND type='Client' ORDER BY name asc ") or die ("Error al traer los datos"); 
+                      }else{
+                        $consulta = mysqli_query($connect, "SELECT * FROM accounts WHERE type='Client' ORDER BY name asc ") or die ("Error al traer los datos");}
 
-                                <?php $consulta22 = mysqli_query($connect, "SELECT DISTINCT destination FROM quotations  ") or die ("Error al traer los datos");
+                        while ($row = mysqli_fetch_array($consulta)){ 
+                        $company=$row['company'];
+                        $name=$row['name'];
 
-                                while ($row = mysqli_fetch_array($consulta22)){ 
-                                $destination=$row['destination'];
-                                ?>
-                                <option value="<?php echo $destination; ?>"><?php echo $destination; ?></option>
+                         $customer_if= $name;
+                          if ($company!='') { $customer_if .= ' | '.$company; }
 
-                                <?php } ?>
+                         ?>
+                      <?php if ($customer!=$customer_if){ ?>
 
-                              </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-12">
-                            <div class="input-group">
-                                <div class="input-group-addon"><i class="fa fa-ship input-fa"></i></div>
-                                <select data-placeholder="Select Service" required="required" name="service" class="form-control select2" style="width:100%;">
-                                    <option></option>
-                                    <option value="Air Service">Air Service</option>
-                                    <option value="Ocean Service">Ocean Service</option>
-                                    <option value="LCL">LCL</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>                   
-                    <div class="form-group row">
-                        <div class="col-md-12">
-                            <div class=" input-group">
-                                <div class="input-group-addon"><i class="fa fa-cube input-fa"></i></div>
-                                <select id="state" class="form-control select2" name="commodity" data-placeholder="Commodity"  style="width:100%;">
-                                  <option> </option>
-                                  <?php $consulta22 = mysqli_query($connect, "SELECT DISTINCT commodity FROM joborders  ") or die ("Error al traer los datos");
-                                    while ($row = mysqli_fetch_array($consulta22)){ 
-                                    $commodity=$row['commodity'];
-                                    ?>
-                                  <option value="<?php echo $commodity; ?>"><?php echo $commodity; ?></option>
-                                  <?php }  ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-12">
-                            <div class=" input-group">
-                                <div class="input-group-addon"><i class="fa fa-money input-fa"></i></div>
-                                <input type="number" name="value" class="form-control" value=""  placeholder="Value">
-                            </div>
-                        </div>
-                    </div>                    
-                    <div class="card" >
-                      <p><i class="fa fa-cube"></i>&nbsp;By Weight and Volume</p>
-                      <div class="item">
-                          <div class="form-group row" style="margin-bottom:0px;">
-                              <div class="col-md-4 col-item text-center">
-                              <label for="">Quantity</label>
-                              </div>
-                              <div class="col-md-4 col-item text-center">
-                                  <label for="">Volume</label>
-                              </div>
-                              <div class="col-md-4 col-item text-center">
-                                  <label for="">Weight</label>
-                              </div>                               
-                          </div>
+
+                      <option value="<?php echo $customer_if; ?>"><?php echo $customer_if; ?></option>
+                      <?php }else{} ?>
+                      <?php }  ?>
+
+                    </select>
+                  </div>
+
+
+
+                  <div class="input-group" style=" position:relative; margin-top:20px;">
+                    <div class="input-group date">
+                      <div class="input-group-addon" style="width:45px;">
+                        <i class="fa fa-calendar"></i>
                       </div>
-                      <div class="item">
-                          <div class="form-group row">
-                              <div class="col-md-4 col-item">
-                                  <input type="text" name="byVolume_qty" value="" class="form-control">
-                              </div>
-                              <div class="col-md-4 col-item">
-                                  <input type="number" name="byVolume_volume" value="" class="form-control">
-                              </div>
-                              <div class="col-md-4 col-item">
-                                  <input type="number" name="byVolume_weight" value="" class="form-control">
-                              </div>                                       
-                          </div>
-                      </div>
+
+                      <input type="text" class="form-control pull-right" data-provide="datepicker"
+                        name="expiration_date" data-date-format="dd-mm-yyyy" placeholder="Expiration Date"
+                        required="required" value="" style="width:166px; position:relative; left:30px;">
+
+                      <input type="text" class="form-control pull-right" data-provide="datepicker" name="initial_date"
+                        data-date-format="dd-mm-yyyy" placeholder="Initial Date" value="<?php echo $fecha_vista; ?>"
+                        style="width:168px; position:relative; left:-1px;">
                     </div>
-                    <div class="card" id="by_boxes_content">
-                        <p><i class="fa fa-cubes"></i>&nbsp;By Boxes</p>
-                        <div class="item">
-                            <div class="form-group row" style="margin-bottom:0px;">
-                                <div class="col-md-2 col-item text-center">
-                                   <label for="">Quantity</label>
-                                </div>
-                                <div class="col-md-2 col-item text-center">
-                                    <label for="">Width</label>
-                                </div>
-                                <div class="col-md-2 col-item text-center">
-                                    <label for="">Lenght</label>
-                                </div>  
-                                <div class="col-md-2 col-item text-center">
-                                    <label for="">Height</label>
-                                </div>  
-                                <div class="col-md-2 col-item text-center">
-                                    <label for="">Weight</label>
-                                </div>                               
-                            </div>
-                        </div>                         
-                        <div class="item">
-                            <div class="form-group row">
-                                <div class="col-md-2 col-item">
-                                    <input type="text" name="byBoxes_qtyX[]" value="" class="form-control">
-                                </div>
-                                <div class="col-md-2 col-item">
-                                    <input type="number" name="byBoxes_widthX[]" value="" class="form-control">
-                                </div>
-                                <div class="col-md-2 col-item">
-                                    <input type="number" name="byBoxes_lenghtX[]" value="" class="form-control">
-                                </div>
-                                <div class="col-md-2 col-item">
-                                    <input type="number" name="byBoxes_heightX[]" value="" class="form-control">
-                                </div>
-                                <div class="col-md-2 col-item">
-                                    <input type="number" name="byBoxes_weightX[]" value="" class="form-control">
-                                </div>
-                                <div class="col-md-1 col-item">                                      
-                                        <button  type="button"  class="btn btn_plus">+</button>                                      
-                                </div>
-                            </div>
-                        </div> 
+                  </div>
+
+
+                  <div class="input-group" style="margin-top:20px;">
+
+
+                    <span class="input-group-addon"
+                      style="display:inline-block; height:34px; width:45px; z-index:999;"><i style="width:20px;"
+                        class="fa fa-map-marker"></i></span>
+
+                    <div style=" display:inline-block; position:relative; margin-left:0px;">
+
+                      <select id="state2" class="js-example-basic-single" name="origin" required="required"
+                        data-placeholder="Origin" type="text" style="width:165px;">
+                        <option></option>
+
+                        <?php $consulta22 = mysqli_query($connect, "SELECT DISTINCT origin FROM quotations  ") or die ("Error al traer los datos");
+
+                        while ($row = mysqli_fetch_array($consulta22)){ 
+                        $origin=$row['origin'];
+                         ?>
+                        <option value="<?php echo $origin; ?>"><?php echo $origin; ?></option>
+
+                        <?php } ?>
+
+                      </select>
+
                     </div>
-                </div>  
-                <div class="col-md-6">
-                    <div class="card" id="freight_charges">
-                      <p>Freight Charges</p>
-                      <div class="item">
-                          <div class="form-group row" style="margin-bottom:0px;">
-                              <div class="col-md-4 col-item text-center">
-                                  <label for="">Description</label>
-                              </div>
-                              <div class="col-md-3 col-item text-center">
-                                  <label for="">Price</label>
-                              </div>
-                              <div class="col-md-3 col-item text-center">
-                                  <label for="">Quantity</label>
-                              </div>                               
-                          </div>
-                      </div> 
-                      
-                        <div class="item">
-                            <div class="form-group row">
-                                <div class="col-md-4 col-item">
-                                    <input type="text" name="freightDescX[]" value="" class="form-control">
-                                </div>
-                                <div class="col-md-3 col-item">
-                                    <input type="number" name="freightChargeX[]" value="" class="form-control">
-                                </div>
-                                <div class="col-md-3 col-item">
-                                    <input type="number" name="freightChargeQX[]" value="1" class="form-control">
-                                </div>
-                                <div class="col-md-1 col-item">
-                                    <?php if($key==0){ ?>
-                                        <button  type="button"  class="btn btn_plus">+</button>
-                                    <?php }else{ ?>
-                                        <button  type="button" class="btn btn_minus">-</button>
-                                    <?php } ?>
-                                </div>
-                            </div>
-                        </div>
+
+
+
+                    <div style="position: relative; left:30px; display:inline-block;">
+
+                      <select id="state3" class="js-example-basic-single" name="destination" required="required"
+                        data-placeholder="Destination" type="text" style="width:165px;">
+                        <option></option>
+
+                        <?php $consulta22 = mysqli_query($connect, "SELECT DISTINCT destination FROM quotations  ") or die ("Error al traer los datos");
+
+                        while ($row = mysqli_fetch_array($consulta22)){ 
+                        $destination=$row['destination'];
+                         ?>
+                        <option value="<?php echo $destination; ?>"><?php echo $destination; ?></option>
+
+                        <?php } ?>
+
+                      </select>
+
                     </div>
-                    <div class="card" id="origin_charges">
-                        <p>Origin Charges</p>
-                        <div class="item">
-                            <div class="form-group row" style="margin-bottom:0px;">
-                                <div class="col-md-4 col-item text-center">
-                                   <label for="">Description</label>
-                                </div>
-                                <div class="col-md-3 col-item text-center">
-                                    <label for="">Price</label>
-                                </div>
-                                <div class="col-md-3 col-item text-center">
-                                    <label for="">Quantity</label>
-                                </div>                               
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="form-group row">
-                                <div class="col-md-4 col-item">
-                                    <input type="text" name="originDescX[]" value="" class="form-control">
-                                </div>
-                                <div class="col-md-3 col-item">
-                                    <input type="number" name="originChargeX[]" value="" class="form-control">
-                                </div>
-                                <div class="col-md-3 col-item">
-                                    <input type="number"  name="originChargeQX[]" value="1" class="form-control">
-                                </div>
-                                <div class="col-md-1 col-item">
-                                  <button  type="button"  class="btn btn_plus">+</button>
-                                </div>
-                            </div>
-                        </div>                                                
+
+                  </div>
+
+                  <div class="input-group" style="margin-top:20px;">
+                    <span class="input-group-addon"><i style="width:20px;" class="fa fa-ship"></i></span>
+                    <select data-placeholder="Select Service" required="required" name="service"
+                      class="form-control select2" style="width:100%;">
+                      <option></option>
+                      <option value='FCL 20"'>FCL 20"</option>
+                      <option value='FCL 40"'>FCL 40"</option>
+                      <option value='FCL 40" HC'>FCL 40" HC</option>
+                    </select>
+                  </div>
+
+                  <div class="input-group" style="margin-top:20px;">
+                    <span class="input-group-addon"><i style="width:20px;" class=""></i>Container Quantity</span>
+                    <input type="number" name="containerQuantity" value="1" class="form-control">
+                  </div>
+
+
+
+
+
+                  <div class="input-group" style="margin-top:20px;">
+                    <span class="input-group-addon"><i style="width:20px;" class="fa fa-cube"></i></span>
+                    <select id="state" class="js-example-basic-single" name="commodity" data-placeholder="Commodity"
+                      type="text" style="width:100%;">
+                      <option> </option>
+
+
+                      <?php $consulta22 = mysqli_query($connect, "SELECT DISTINCT commodity FROM joborders  ") or die ("Error al traer los datos");
+
+                        while ($row = mysqli_fetch_array($consulta22)){ 
+                        $commodity=$row['commodity'];
+                         ?>
+
+                      <option value="<?php echo $commodity; ?>"><?php echo $commodity; ?></option>
+                      <?php }  ?>
+                    </select>
+
+
+                  </div>
+
+                  <div class="input-group" style="margin-top:20px;">
+                    <span class="input-group-addon" style="width:46px;"><i style="width:30px;" class=""></i><span
+                        style="font-weight:bolder; width:50px;">  $  </span></span>
+                    <input type="number" style="width:363px;" name="value" placeholder="Value" class="form-control">
+                  </div>
+
+
+
+
+
+                </div>
+
+                <div
+                  style="width:45%; padding:20px; margin-top:0px; left:500px; top:15px; position:relative;  display:inline-block; ">
+
+                  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+                  <script>
+                    $(document).ready(function () {
+                      var max_fields = 10;
+                      var wrapper = $(".container1");
+                      var add_button = $(".add_form_field");
+
+                      var x = 1;
+                      $(add_button).click(function (e) {
+                        e.preventDefault();
+                        if (x < max_fields) {
+                          x++;
+                          $(wrapper).append('<div class="input-group" style="margin-top:-5px;"><input class="form-control" type="text" style="margin-top:15px; padding:5px; width:150px; position:relative; top:-14px; left:0px;" name="freightDescX[]"><input class="form-control" type="number" step="any" name="freightChargeX[]" style="width:80px; height:30px; left:10px; position:relative; top:1px;"><input class="form-control" type="number" name="freightChargeQX[]"  step="any" value="1" style="width:80px; text-align:center; height:30px; left:20px; position:relative; top:1px;"><a style="margin-top:5px; position:relative; left:25px;" href="#" class="delete"><span style="font-size:16px; font-weight:bold; ">-</span></a></div>'); //add input box
+                        }
+                        else {
+                          alert('You Reached the limits')
+                        }
+                      });
+
+                      $(wrapper).on("click", ".delete", function (e) {
+                        e.preventDefault(); $(this).parent('div').remove(); x--;
+                      })
+                    });
+                  </script>
+
+                  <script>
+                    $(document).ready(function () {
+                      var max_fields = 10;
+                      var wrapper = $(".container2");
+                      var add_button = $(".add_form_field2");
+
+                      var x = 1;
+                      $(add_button).click(function (e) {
+                        e.preventDefault();
+                        if (x < max_fields) {
+                          x++;
+                          $(wrapper).append('<div class="input-group" style="margin-top:-5px;"><input class="form-control" type="text" style="margin-top:15px; padding:5px; width:150px; position:relative; top:-14px; left:0px;" name="originDescX[]"><input class="form-control" type="number" step="any" name="originChargeX[]" style="width:80px; height:30px; left:10px; position:relative; top:1px;"><input class="form-control" type="number" name="originChargeQX[]"  step="any" value="1" style="width:80px; text-align:center; height:30px; left:20px; position:relative; top:1px;"><a style="margin-top:5px; position:relative; left:25px;" href="#" class="delete"><span style="font-size:16px; font-weight:bold; ">-</span></a></div>'); //add input box
+                        }
+                        else {
+                          alert('You Reached the limits')
+                        }
+                      });
+
+                      $(wrapper).on("click", ".delete", function (e) {
+                        e.preventDefault(); $(this).parent('div').remove(); x--;
+                      })
+                    });
+                  </script>
+
+                  <script>
+                    $(document).ready(function () {
+                      var max_fields = 10;
+                      var wrapper = $(".container3");
+                      var add_button = $(".add_form_field3");
+
+                      var x = 1;
+                      $(add_button).click(function (e) {
+                        e.preventDefault();
+                        if (x < max_fields) {
+                          x++;
+                          $(wrapper).append('<div class="input-group" style="margin-top:-5px;"><input class="form-control" type="text" style="margin-top:15px; padding:5px; width:150px; position:relative; top:-14px; left:0px;" name="destinationDescX[]"><input class="form-control" type="number" step="any" name="destinationChargeX[]" style="width:80px; height:30px; left:10px; position:relative; top:1px;"><input class="form-control" type="number" name="destinationChargeQX[]"  step="any" value="1" style="width:80px; text-align:center; height:30px; left:20px; position:relative; top:1px;"><a style="margin-top:5px; position:relative; left:25px;" href="#" class="delete"><span style="font-size:16px; font-weight:bold; ">-</span></a></div>'); //add input box
+                        }
+                        else {
+                          alert('You Reached the limits')
+                        }
+                      });
+
+                      $(wrapper).on("click", ".delete", function (e) {
+                        e.preventDefault(); $(this).parent('div').remove(); x--;
+                      })
+                    });
+                  </script>
+
+
+
+
+                  <div class="input-group container1"
+                    style="margin-top:-40px; border:1px solid #D2D6DE; padding:15px; width:405px;">
+
+                    <p style="margin-top:-10px;">Freight Charges</p>
+                    <br>
+
+                    <div style="margin-top:-5px;">
+
+                      <button class="add_form_field"
+                        style="margin-bottom:0px; width:30px; position:relative; left:90px; top:-9px; font-size:13px;">
+                        <span style="font-size:16px; font-weight:bold; ">+</span>
+                      </button>
+
+                      <span
+                        style="position:absolute; font-size:11px; font-weight:bolder; left:60px; top:30px;">Description</span>
+                      <input class="form-control" type="text"
+                        style="margin-top:15px; padding:5px; width:150px; position:relative; top:-14px; left:0px;"
+                        name="freightDescX[]">
+
+                      <span
+                        style="position:absolute; font-size:11px; font-weight:bolder; left:200px; top:30px;">Price</span>
+                      <input class="form-control" type="number" name="freightChargeX[]" step="any"
+                        style="width:80px; height:30px; left:10px; position:relative; top:1px;">
+
+                      <span
+                        style="position:absolute; font-size:11px; font-weight:bolder; left:280px; top:30px; ">Quantity</span>
+                      <input class="form-control" type="number" value="1" step="any" name="freightChargeQX[]"
+                        style="width:80px; text-align:center; height:30px; left:20px; position:relative; top:1px;">
+
                     </div>
-                    <div class="card" id="destination_charges">
-                        <p>Destination Charges</p>
-                        <div class="item">
-                            <div class="form-group row" style="margin-bottom:0px;">
-                                <div class="col-md-4 col-item text-center">
-                                   <label for="">Description</label>
-                                </div>
-                                <div class="col-md-3 col-item text-center">
-                                    <label for="">Price</label>
-                                </div>
-                                <div class="col-md-3 col-item text-center">
-                                    <label for="">Quantity</label>
-                                </div>                               
-                            </div>
-                        </div> 
-                        <div class="item">
-                            <div class="form-group row">
-                                <div class="col-md-4 col-item">
-                                    <input type="text" name="destinationDescX[]" value="" class="form-control">
-                                </div>
-                                <div class="col-md-3 col-item">
-                                    <input type="number" name="destinationChargeX[]" value="" class="form-control">
-                                </div>
-                                <div class="col-md-3 col-item">
-                                    <input type="number" name="destinationChargeQX[]" value="1" class="form-control">
-                                </div>
-                                <div class="col-md-1 col-item">                                        
-                                  <button  type="button"  class="btn btn_plus">+</button>                                          
-                                </div>
-                            </div>
-                        </div>          
+                    <br>
+                    <div style="margin-top:-12px;"></div>
+
+                  </div>
+
+
+
+                  <div class="input-group container2"
+                    style="margin-top:18px; border:1px solid #D2D6DE; padding:15px; width:405px;">
+
+                    <p style="margin-top:-10px;">Origin Charges</p>
+                    <br>
+                    <div style="margin-top:-5px;">
+
+                      <button class="add_form_field2"
+                        style="margin-bottom:0px; width:30px; position:relative; left:90px; top:-9px; font-size:13px;">
+                        <span style="font-size:16px; font-weight:bold; ">+</span>
+                      </button>
+
+                      <span
+                        style="position:absolute; font-size:11px; font-weight:bolder; left:60px; top:30px;">Description</span>
+                      <input class="form-control" type="text"
+                        style="margin-top:15px; padding:5px; width:150px; position:relative; top:-14px; left:0px;"
+                        name="originDescX[]">
+
+                      <span
+                        style="position:absolute; font-size:11px; font-weight:bolder; left:200px; top:30px;">Price</span>
+                      <input class="form-control" type="number" step="any" name="originChargeX[]"
+                        style="width:80px; height:30px; left:10px; position:relative; top:1px;">
+
+                      <span
+                        style="position:absolute; font-size:11px; font-weight:bolder; left:280px; top:30px; ">Quantity</span>
+                      <input class="form-control" type="number" value="1" step="any" name="originChargeQX[]"
+                        style="width:80px; text-align:center; height:30px; left:20px; position:relative; top:1px;">
+
                     </div>
-                    <div class="card">
-                        <p>Remarks</p>
-                        <div class="item">
-                            <div class="form-group row">
-                                <div class="col-md-11 col-item">                                   
-                                   <textarea name="remarks" id="" cols="30" rows="10" class="form-control"> A. COTIZACION ES BASADA EN TERMINO FOB DESDE BODEGA GUANGZHOU. B. TRANSITO APROX:  X Dias 
+                    <br>
+                    <div style="margin-top:-12px;"></div>
+                  </div>
+
+
+
+                  <div class="input-group container3"
+                    style="margin-top:18px; border:1px solid #D2D6DE; padding:15px; width:405px;">
+
+                    <p style="margin-top:-10px;">Destination Charges</p>
+                    <br>
+                    <div style="margin-top:-5px;">
+
+                      <button class="add_form_field3"
+                        style="margin-bottom:0px; width:30px; position:relative; left:90px; top:-9px; font-size:13px;">
+                        <span style="font-size:16px; font-weight:bold; ">+</span>
+                      </button>
+
+                      <span
+                        style="position:absolute; font-size:11px; font-weight:bolder; left:60px; top:30px;">Description</span>
+                      <input class="form-control" type="text"
+                        style="margin-top:15px; padding:5px; width:150px; position:relative; top:-14px; left:0px;"
+                        name="destinationDescX[]">
+
+                      <span
+                        style="position:absolute; font-size:11px; font-weight:bolder; left:200px; top:30px;">Price</span>
+                      <input class="form-control" type="number" step="any" name="destinationChargeX[]"
+                        style="width:80px; height:30px; left:10px; position:relative; top:1px;">
+
+                      <span
+                        style="position:absolute; font-size:11px; font-weight:bolder; left:280px; top:30px; ">Quantity</span>
+                      <input class="form-control" type="number" value="1" step="any" name="destinationChargeQX[]"
+                        style="width:80px; text-align:center; height:30px; left:20px; position:relative; top:1px;">
+
+                    </div>
+                    <br>
+                    <div style="margin-top:-12px;"></div>
+                  </div>
+
+                </div>
+
+                <div class="input-group"
+                  style="margin-top:10px;  position:relative; left:520px; border:1px solid #D2D6DE; padding:15px; width:405px;">
+
+                  <p style="margin-top:-10px;">Remarks</p>
+                  <div style="margin-top:-5px;">
+
+                    <textarea name="remarks" style="width:100%; resize:none; min-height:200px; border-color:#D2D6DE; ">
+A. COTIZACION ES BASADA EN TERMINO FOB DESDE BODEGA GUANGZHOU.
+B. TRANSITO APROX:  X Dias 
 C. NO INCLUYE SEGURO DE CARGA, NO INCLUYE AGENCIAMIENTO ADUANAL.</textarea>
-                                </div>
-                            </div>
-                        </div>                                        
-                    </div>
-                    <div class="from-group row">
-                      <div class="col-md-12 text-right">
-                        <button  type="submit" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Save</button>
-                      </div>
-                      
-                    </div>
-                </div>               
+                  </div>
+                </div>
+
+                <input type="submit" value="Save" class="form_1_submit"
+                  style="background:#007F46; width:100px; position:relative; left:-75px; top:20px; z-index:9999;">
+
+
+                <br><br><br><br>
+
               </div>
-            </form>
+
+
           </div>
 
-        <?php }?>
+
+
+          </form>
+
+
+          <?php }elseif($option=='Pieces' && $step=='3'){ ?>
+
+
+          <form action="quotation.php" method="POST">
+
+
+            <div class="form_1 shadow2"
+              style="width:1000px; margin-left:-500px; background:white; min-height:700px; margin-top:50px;">
+
+              <h3
+                style="text-align:center; color:black; font-weight:400; padding:20px; font-size:20px; border-bottom:1px solid #555555;">
+                By Pieces Quotation<br>
+              </h3>
+
+
+
+
+              <script type="text/javascript">
+                setTimeout(fade_out, 3000);
+
+                function fade_out() {
+                  $("#mydiv").fadeOut().empty();
+                }
+              </script>
+
+              <div
+                style="width:45%; padding:20px; margin-left:10px; margin-top:-40px; top:108px; position:absolute; display:inline-block; ">
+
+
+
+
+
+
+                <div class="input-group">
+                  <span class="input-group-addon"><i style="width:20px;" class="fa fa-circle"></i></span>
+                  <select data-placeholder="Select Agent" <?php if ($level!='Seller'){ ?> name="agent_name" <?php } ?>
+                    class="form-control select2" <?php if ($level=='Seller'){ ?> disabled <?php } ?>
+                    style="width:100%;">
+
+                    <option value="<?php echo $agent_name; ?>"><?php echo $agent_name; ?></option>
+
+                    <?php 
+
+                      $consultaList = mysqli_query($connect, "SELECT * FROM agents ORDER BY name asc ") or die ("Error al traer los datos");
+
+                        while ($rowList = mysqli_fetch_array($consultaList)){ 
+
+                        $agent_List=$rowList['name']; ?>
+
+
+                    <?php if ($agent_name!=$agent_List){ ?>
+
+                    <option value="<?php echo $agent_List; ?>"><?php echo $agent_List; ?></option>
+                    <?php } }  ?>
+
+                  </select>
+
+
+                  <?php if ($level=='Seller'){ ?>
+                  <input type="text" name="agent_name" style="display:none;" value="<?php echo $agent_name; ?>">
+                  <?php } ?>
+
+                </div>
+
+                <input style="display:none;" name="agent_email" value="<?php echo $email; ?>">
+
+
+
+                <div class="input-group" style="margin-top:20px;">
+                  <span class="input-group-addon"><i style="width:20px;" class="fa fa-user"></i></span>
+                  <select data-placeholder="Select Client" name="client_name" class="form-control select2"
+                    style="width:364px; ">
+
+                    <option selected="selected" value="<?php echo $client_name; ?>"><?php echo $client_name; ?></option>
+                    <?php 
+
+
+                      if ($level=='Seller') { $consulta = mysqli_query($connect, "SELECT * FROM accounts WHERE agent='$agent_name' AND type='Client' ORDER BY name asc ") or die ("Error al traer los datos"); 
+                      }else{
+                        $consulta = mysqli_query($connect, "SELECT * FROM accounts WHERE type='Client' ORDER BY name asc ") or die ("Error al traer los datos");}
+
+
+
+                        while ($row = mysqli_fetch_array($consulta)){ 
+                        $company=$row['company'];
+                        $name=$row['name'];
+
+                         $customer_if= $name;
+                          if ($company!='') { $customer_if .= ' | '.$company; }
+
+                         ?>
+                    <?php if ($customer!=$customer_if){ ?>
+
+
+                    <option value="<?php echo $customer_if; ?>"><?php echo $customer_if; ?></option>
+                    <?php }else{} ?>
+                    <?php }  ?>
+
+                  </select>
+                </div>
+
+
+
+
+
+                <div class="input-group" style=" position:relative; margin-top:20px;">
+                  <div class="input-group date">
+                    <div class="input-group-addon" style="width:45px;">
+                      <i class="fa fa-calendar"></i>
+                    </div>
+
+                    <input type="text" class="form-control pull-right" data-provide="datepicker" name="expiration_date"
+                      data-date-format="dd-mm-yyyy" placeholder="Expiration Date" required="required" value=""
+                      style="width:166px; position:relative; left:30px;">
+
+                    <input type="text" class="form-control pull-right" data-provide="datepicker" name="initial_date"
+                      data-date-format="dd-mm-yyyy" placeholder="Initial Date" value="<?php echo $fecha_vista; ?>"
+                      style="width:168px; position:relative; left:-1px;">
+                  </div>
+                </div>
+
+
+                <div class="input-group" style="margin-top:20px;">
+
+
+                  <span class="input-group-addon" style="display:inline-block; height:34px; width:45px; z-index:999;"><i
+                      style="width:20px;" class="fa fa-map-marker"></i></span>
+
+                  <div style=" display:inline-block; position:relative; margin-left:0px;">
+
+                    <select id="state2" class="js-example-basic-single" name="origin" required="required"
+                      data-placeholder="Origin" type="text" style="width:165px;">
+                      <option></option>
+
+                      <?php $consulta22 = mysqli_query($connect, "SELECT DISTINCT origin FROM quotations  ") or die ("Error al traer los datos");
+
+                        while ($row = mysqli_fetch_array($consulta22)){ 
+                        $origin=$row['origin'];
+                         ?>
+                      <option value="<?php echo $origin; ?>"><?php echo $origin; ?></option>
+
+                      <?php } ?>
+
+                    </select>
+
+                  </div>
+
+
+
+                  <div style="position: relative; left:30px; display:inline-block;">
+
+                    <select id="state3" class="js-example-basic-single" name="destination" required="required"
+                      data-placeholder="Destination" type="text" style="width:165px;">
+                      <option></option>
+
+                      <?php $consulta22 = mysqli_query($connect, "SELECT DISTINCT destination FROM quotations  ") or die ("Error al traer los datos");
+
+                        while ($row = mysqli_fetch_array($consulta22)){ 
+                        $destination=$row['destination'];
+                         ?>
+                      <option value="<?php echo $destination; ?>"><?php echo $destination; ?></option>
+
+                      <?php } ?>
+
+                    </select>
+
+                  </div>
+
+                </div>
+
+                <div class="input-group" style="margin-top:20px;">
+                  <span class="input-group-addon"><i style="width:20px;" class="fa fa-ship"></i></span>
+                  <select data-placeholder="Select Service" required="required" name="service"
+                    class="form-control select2" style="width:100%;"="">
+
+                    <option></option>
+
+                    <option value="Air Service">Air Service</option>
+
+                    <option value="Ocean Service">Ocean Service</option>
+
+                    <option value="LCL">LCL</option>
+                  </select>
+                </div>
+
+
+
+
+
+                <div class="input-group" style="margin-top:20px;">
+                  <span class="input-group-addon"><i style="width:20px;" class="fa fa-cube"></i></span>
+                  <select id="state" class="js-example-basic-single" name="commodity" data-placeholder="Commodity"
+                    type="text" style="width:100%;">
+                    <option> </option>
+
+
+                    <?php $consulta22 = mysqli_query($connect, "SELECT DISTINCT commodity FROM joborders  ") or die ("Error al traer los datos");
+
+                        while ($row = mysqli_fetch_array($consulta22)){ 
+                        $commodity=$row['commodity'];
+                         ?>
+
+                    <option value="<?php echo $commodity; ?>"><?php echo $commodity; ?></option>
+                    <?php }  ?>
+                  </select>
+
+
+                </div>
+
+                <div class="input-group" style="margin-top:20px;">
+                  <span class="input-group-addon" style="width:46px;"><i style="width:30px;" class=""></i><span
+                      style="font-weight:bolder; width:50px;">  $  </span></span>
+                  <input type="number" style="width:363px;" name="value" placeholder="Value" class="form-control">
+                </div>
+                3
+
+
+              </div>
+
+
+
+              <div
+                style="width:45%; padding:20px; margin-top:0px; left:500px; top:15px; position:relative;  display:inline-block; ">
+
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+                <script>
+                  $(document).ready(function () {
+                    var max_fields = 10;
+                    var wrapper = $(".container1");
+                    var add_button = $(".add_form_field");
+
+                    var x = 1;
+                    $(add_button).click(function (e) {
+                      e.preventDefault();
+                      if (x < max_fields) {
+                        x++;
+                        $(wrapper).append('<div class="input-group" style="margin-top:-5px;"><input class="form-control" type="text" style="margin-top:15px; padding:5px; width:150px; position:relative; top:-14px; left:0px;" name="freightDescX[]"><input class="form-control" type="number" step="any" name="freightChargeX[]" style="width:80px; height:30px; left:10px; position:relative; top:1px;"><input class="form-control" type="number" name="freightChargeQX[]"  step="any" value="1" style="width:80px; text-align:center; height:30px; left:20px; position:relative; top:1px;"><a style="margin-top:5px; position:relative; left:25px;" href="#" class="delete"><span style="font-size:16px; font-weight:bold; ">-</span></a></div>'); //add input box
+                      }
+                      else {
+                        alert('You Reached the limits')
+                      }
+                    });
+
+                    $(wrapper).on("click", ".delete", function (e) {
+                      e.preventDefault(); $(this).parent('div').remove(); x--;
+                    })
+                  });
+                </script>
+
+                <script>
+                  $(document).ready(function () {
+                    var max_fields = 10;
+                    var wrapper = $(".container2");
+                    var add_button = $(".add_form_field2");
+
+                    var x = 1;
+                    $(add_button).click(function (e) {
+                      e.preventDefault();
+                      if (x < max_fields) {
+                        x++;
+                        $(wrapper).append('<div class="input-group" style="margin-top:-5px;"><input class="form-control" type="text" style="margin-top:15px; padding:5px; width:150px; position:relative; top:-14px; left:0px;" name="originDescX[]"><input class="form-control" type="number" step="any" name="originChargeX[]" style="width:80px; height:30px; left:10px; position:relative; top:1px;"><input class="form-control" type="number" name="originChargeQX[]"  step="any" value="1" style="width:80px; text-align:center; height:30px; left:20px; position:relative; top:1px;"><a style="margin-top:5px; position:relative; left:25px;" href="#" class="delete"><span style="font-size:16px; font-weight:bold; ">-</span></a></div>'); //add input box
+                      }
+                      else {
+                        alert('You Reached the limits')
+                      }
+                    });
+
+                    $(wrapper).on("click", ".delete", function (e) {
+                      e.preventDefault(); 
+                      $(this).parent('div').remove(); x--;
+                    })
+                  });
+                </script>
+
+                <script>
+                  $(document).ready(function () {
+                    var max_fields = 10;
+                    var wrapper = $(".container3");
+                    var add_button = $(".add_form_field3");
+
+                    var x = 1;
+                    $(add_button).click(function (e) {
+                      e.preventDefault();
+                      if (x < max_fields) {
+                        x++;
+                        $(wrapper).append('<div class="input-group" style="margin-top:-5px;"><input class="form-control" type="text" style="margin-top:15px; padding:5px; width:150px; position:relative; top:-14px; left:0px;" name="destinationDescX[]"><input class="form-control" type="number" step="any" name="destinationChargeX[]" style="width:80px; height:30px; left:10px; position:relative; top:1px;"><input class="form-control" type="number" name="destinationChargeQX[]"  step="any" value="1" style="width:80px; text-align:center; height:30px; left:20px; position:relative; top:1px;"><a style="margin-top:5px; position:relative; left:25px;" href="#" class="delete"><span style="font-size:16px; font-weight:bold; ">-</span></a></div>'); //add input box
+                      }
+                      else {
+                        alert('You Reached the limits')
+                      }
+                    });
+
+                    $(wrapper).on("click", ".delete", function (e) {
+                      e.preventDefault(); $(this).parent('div').remove(); x--;
+                    })
+                  });
+                </script>
+
+                <script>
+                  $(document).ready(function () {
+                    var max_fields = 10;
+                    var wrapper = $(".container4");
+                    var add_button = $(".add_form_field4");
+
+                    var x = 1;
+                    $(add_button).click(function (e) {
+                      e.preventDefault();
+                      if (x < max_fields) {
+                        x++;
+                        $(wrapper).append('<div class="input-group" style="margin-top:5px;"><input class="form-control" type="number" placeholder="" name="byBoxes_qtyX[]" style="border-left:1px solid black; width:70px;  height:30px; position:relative; top:1px;"> <input class="form-control" type="text" placeholder="" style="border-left:1px solid black; display:inline-block; margin-top:15px; padding:5px; width:55px; position:relative; top:-14px; left:10px;" name="byBoxes_widthX[]"><input class="form-control" type="text" placeholder="" style="border-left:1px solid black; display:inline-block; margin-top:15px; padding:5px; width:60px; position:relative; top:-14px; left:25px;" name="byBoxes_lenghtX[]"><input class="form-control" type="text" placeholder="" style="border-left:1px solid black; display:inline-block; margin-top:15px; padding:5px; width:60px; position:relative; top:-14px; left:40px;" name="byBoxes_heightX[]"><input class="form-control" type="text" placeholder="" style="border-left:1px solid black; background:#EFEFEF; display:inline-block; margin-top:15px; padding:5px; width:60px; position:relative; top:-14px; left:50px;" name="byBoxes_weightX[]"><a style="margin-top:5px; position:absolute; left:357px; top:-2px; width:25px; height:25px;" href="#" class="delete">&nbsp;<span style="font-size:16px; font-weight:bold; position:relative; left:-7px; top:-4px;">-</span></a></div>'); //add input box
+                      }
+                      else {
+                        alert('You Reached the limits')
+                      }
+                    });
+
+                    $(wrapper).on("click", ".delete", function (e) {
+                      e.preventDefault(); $(this).parent('div').remove(); x--;
+                    })
+                  });
+                </script>
+
+
+
+
+                <div class="input-group container1"
+                  style="margin-top:-40px; border:1px solid #D2D6DE; padding:15px; width:405px;">
+
+                  <p style="margin-top:-10px;">Freight Charges</p>
+                  <br>
+
+                  <div style="margin-top:-5px;">
+
+                    <button class="add_form_field"
+                      style="margin-bottom:0px; width:30px; position:relative; left:90px; top:-9px; font-size:13px;">
+                      <span style="font-size:16px; font-weight:bold; ">+</span>
+                    </button>
+
+                    <span
+                      style="position:absolute; font-size:11px; font-weight:bolder; left:60px; top:30px;">Description</span>
+                    <input class="form-control" type="text"
+                      style="margin-top:15px; padding:5px; width:150px; position:relative; top:-14px; left:0px;"
+                      name="freightDescX[]">
+
+                    <span
+                      style="position:absolute; font-size:11px; font-weight:bolder; left:200px; top:30px;">Price</span>
+                    <input class="form-control" type="number" step="any" name="freightChargeX[]"
+                      style="width:80px; height:30px; left:10px; position:relative; top:1px;">
+
+                    <span
+                      style="position:absolute; font-size:11px; font-weight:bolder; left:280px; top:30px; ">Quantity</span>
+                    <input class="form-control" type="number" step="any" value="1" name="freightChargeQX[]"
+                      style="width:80px; text-align:center; height:30px; left:20px; position:relative; top:1px;">
+
+                  </div>
+                  <br>
+                  <div style="margin-top:-12px;"></div>
+
+                </div>
+
+
+
+                <div class="input-group container2"
+                  style="margin-top:18px; border:1px solid #D2D6DE; padding:15px; width:405px;">
+
+                  <p style="margin-top:-10px;">Origin Charges</p>
+                  <br>
+                  <div style="margin-top:-5px;">
+
+                    <button class="add_form_field2"
+                      style="margin-bottom:0px; width:30px; position:relative; left:90px; top:-9px; font-size:13px;">
+                      <span style="font-size:16px; font-weight:bold; ">+</span>
+                    </button>
+
+                    <span
+                      style="position:absolute; font-size:11px; font-weight:bolder; left:60px; top:30px;">Description</span>
+                    <input class="form-control" type="text"
+                      style="margin-top:15px; padding:5px; width:150px; position:relative; top:-14px; left:0px;"
+                      name="originDescX[]">
+
+                    <span
+                      style="position:absolute; font-size:11px; font-weight:bolder; left:200px; top:30px;">Price</span>
+                    <input class="form-control" type="number" step="any" name="originChargeX[]"
+                      style="width:80px; height:30px; left:10px; position:relative; top:1px;">
+
+                    <span
+                      style="position:absolute; font-size:11px; font-weight:bolder; left:280px; top:30px; ">Quantity</span>
+                    <input class="form-control" type="number" step="any" value="1" name="originChargeQX[]"
+                      style="width:80px; text-align:center; height:30px; left:20px; position:relative; top:1px;">
+
+                  </div>
+                  <br>
+                  <div style="margin-top:-12px;"></div>
+                </div>
+
+
+
+
+                <div class="input-group container3"
+                  style="margin-top:18px; border:1px solid #D2D6DE; padding:15px; width:405px;">
+
+                  <p style="margin-top:-10px;">Destination Charges</p>
+                  <br>
+                  <div style="margin-top:-5px;">
+
+                    <button class="add_form_field3"
+                      style="margin-bottom:0px; width:30px; position:relative; left:90px; top:-9px; font-size:13px;">
+                      <span style="font-size:16px; font-weight:bold; ">+</span>
+                    </button>
+
+                    <span
+                      style="position:absolute; font-size:11px; font-weight:bolder; left:60px; top:30px;">Description</span>
+                    <input class="form-control" type="text"
+                      style="margin-top:15px; padding:5px; width:150px; position:relative; top:-14px; left:0px;"
+                      name="destinationDescX[]">
+
+                    <span
+                      style="position:absolute; font-size:11px; font-weight:bolder; left:200px; top:30px;">Price</span>
+                    <input class="form-control" type="number" step="any" name="destinationChargeX[]"
+                      style="width:80px; height:30px; left:10px; position:relative; top:1px;">
+
+                    <span
+                      style="position:absolute; font-size:11px; font-weight:bolder; left:280px; top:30px; ">Quantity</span>
+                    <input class="form-control" type="number" step="any" value="1" name="destinationChargeQX[]"
+                      style="width:80px; text-align:center; height:30px; left:20px; position:relative; top:1px;">
+
+                  </div>
+                  <br>
+                  <div style="margin-top:-12px;"></div>
+                </div>
+
+
+              </div>
+              <div class="input-group"
+                style=" margin-top:10px; left:30px; border:1px solid #D2D6DE; padding:15px; width:405px;">
+
+
+                <div style="margin-top:-5px;">
+
+                  <div style="width:200px; margin-bottom:7px; margin-left:27px;"><span
+                      style="font-size:13px; font-weight:bolder;"><span
+                        style="font-size:18px; position:absolute; top:13px; left:18px;" class="fa fa-cube"></span>By
+                      Weight and Volume</span></div>
+                  <br>
+
+                  <span
+                    style="position:absolute; font-weight:bolder; font-size:11px; top:38px; left:40px;">Quantity</span>
+                  <input class="form-control" type="number" step="any" placeholder="" name="byVolume_qty"
+                    style="border-left:1px solid black; width:100px; height:30px; position:relative; top:3px;">
+                  <span
+                    style="position:absolute; font-weight:bolder; font-size:11px; top:38px; left:165px;">Volume</span>
+                  <input class="form-control" type="number" step="any" placeholder=""
+                    style="border-left:1px solid black; display:inline-block; margin-top:15px; padding:5px; width:135px; position:relative; top:-14px; left:10px;"
+                    name="byVolume_volume">
+
+                  <span
+                    style="position:absolute; font-weight:bolder; font-size:11px; top:38px; left:315px;">Weight</span>
+                  <input class="form-control" type="number" step="any" placeholder=""
+                    style="border-left:1px solid black; background:#EFEFEF; display:inline-block; margin-top:15px; padding:5px; width:120px; position:relative; top:-14px; left:20px;"
+                    name="byVolume_weight">
+                </div>
+              </div>
+              <br><br>
+
+              <div class="input-group"
+                style="margin-top:-140px;  position:relative; left:520px; border:1px solid #D2D6DE; padding:15px; width:405px;">
+                <input type="number" name="containerQuantity" style="display:none;" value="1" class="form-control">
+                <p style="margin-top:-10px;">Remarks</p>
+                <div style="margin-top:-5px;">
+                  <textarea name="remarks" style="width:100%; resize:none; min-height:200px; border-color:#D2D6DE; ">
+                    A. COTIZACION ES BASADA EN TERMINO FOB DESDE BODEGA GUANGZHOU.
+                    B. TRANSITO APROX:  X Dias 
+                    C. NO INCLUYE SEGURO DE CARGA, NO INCLUYE AGENCIAMIENTO ADUANAL.</textarea>
+                </div>
+              </div>
+              <input type="submit" value="Save" class="form_1_submit"
+                style="background:#007F46; width:100px; position:relative; left:-73px; top:20px; z-index:9999;">
+
+
+              <div class="input-group container4"
+                style="margin-top:-125px; left:30px; border:1px solid #D2D6DE; padding:15px; width:405px;">
+
+                <div style="margin-top:-14px; ">
+
+                  <button class="add_form_field4"
+                    style="margin-bottom:0px; position:relative; left:330px; top:-5px; font-size:13px; height:25px;"><span
+                      style="position:relative; top:-3px;">Add</span> &nbsp; <span
+                      style="font-size:16px; position:relative; top:-2px; font-weight:bold; ">+</span></button>
+
+                  <span style="font-size:13px; font-weight:bolder; position:relative; top:-3px;"><span
+                      style="font-size:18px; position:absolute; top:2px; left:-28px;" class="fa fa-cubes"></span>By
+                    Boxes</span> <br><br>
+
+                  <span
+                    style="position:absolute; font-weight:bolder; font-size:11px; top:38px; left:28px;">Quantity</span>
+                  <input class="form-control" type="number" step="any" placeholder="" name="byBoxes_qtyX[]"
+                    style="border-left:1px solid black; width:70px;  height:30px; position:relative; top:1px;">
+
+                  <span
+                    style="position:absolute; font-weight:bolder; font-size:11px; top:38px; left:107px;">Width</span>
+                  <input class="form-control" type="number" step="any" placeholder=""
+                    style="border-left:1px solid black; display:inline-block; margin-top:15px; padding:5px; width:55px; position:relative; top:-14px; left:10px;"
+                    name="byBoxes_widthX[]">
+
+                  <span
+                    style="position:absolute; font-weight:bolder; font-size:11px; top:38px; left:177px;">Lenght</span>
+                  <input class="form-control" type="number" step="any" placeholder=""
+                    style="border-left:1px solid black; display:inline-block; margin-top:15px; padding:5px; width:60px; position:relative; top:-14px; left:25px;"
+                    name="byBoxes_lenghtX[]">
+
+                  <span
+                    style="position:absolute; font-weight:bolder; font-size:11px; top:38px; left:253px;">Height</span>
+                  <input class="form-control" type="number" step="any" placeholder=""
+                    style="border-left:1px solid black; display:inline-block; margin-top:15px; padding:5px; width:60px; position:relative; top:-14px; left:40px;"
+                    name="byBoxes_heightX[]">
+
+                  <span
+                    style="position:absolute; font-weight:bolder; font-size:11px; top:38px; left:320px;">Weight</span>
+                  <input class="form-control" type="number" step="any" placeholder=""
+                    style="border-left:1px solid black; background:#EFEFEF; display:inline-block; margin-top:15px; padding:5px; width:60px; position:relative; top:-14px; left:50px;"
+                    name="byBoxes_weightX[]">
+
+
+
+                </div>
+
+
+              </div>
+
+              <br><br><br><br><br><br>
+
+
+
+            </div>
+
+
+
+          </form>
+
+          <?php } ?>
+
+
+
       </section>
       <!-- /.content -->
     </div>
@@ -1686,135 +2124,11 @@ C. NO INCLUYE SEGURO DE CARGA, NO INCLUYE AGENCIAMIENTO ADUANAL.</textarea>
   <!-- ./wrapper -->
 
 
- 
+  <!-- Page script -->
   <script>
-    $(".select2").select2();
-    $("#by_boxes_content .btn_plus").on("click", function(e){
-        e.preventDefault();
-        var html='<div class="item">';
-            html+='<div class="form-group row">';
-            html+='<div class="col-md-2 col-item">';
-            html+='<input type="text" name="byBoxes_qtyX[]" class="form-control">';
-            html+='</div>';
-            html+='<div class="col-md-2 col-item">';
-            html+='<input type="number" name="byBoxes_widthX[]" class="form-control">';
-            html+='</div>';
-            html+='<div class="col-md-2 col-item">';
-            html+='<input type="number"  name="byBoxes_lenghtX[]" class="form-control">';
-            html+='</div>';
-            html+='<div class="col-md-2 col-item">';
-            html+='<input type="number"  name="byBoxes_heightX[]" class="form-control">';
-            html+='</div>';
-            html+='<div class="col-md-2 col-item">';
-            html+='<input type="number"  name="byBoxes_weightX[]" class="form-control">';
-            html+='</div>';
-            html+='<div class="col-md-1 col-item">';
-            html+='<button  type="button" class="btn btn_minus">-</button>';
-            html+='</div>';
-            html+='</div>';
-            html+='</div>';
-        $("#by_boxes_content").append(html);
+    $(function () {
 
-          $('#by_boxes_content .btn_minus').on("click", function (e) {
-            e.preventDefault(); 
-            $(this).parent('div').parent('div').parent('div').remove(); 
-          })
-      });
 
-      $('#by_boxes_content .btn_minus').on("click", function (e) {
-        e.preventDefault(); 
-        $(this).parent('div').parent('div').parent('div').remove(); 
-      })
-    $("#freight_charges .btn_plus").on("click", function(e){
-        e.preventDefault();
-        var html='<div class="item">';
-            html+='<div class="form-group row">';
-            html+='<div class="col-md-4 col-item">';
-            html+='<input type="text" name="freightDescX[]" class="form-control">';
-            html+='</div>';
-            html+='<div class="col-md-3 col-item">';
-            html+='<input type="number" name="freightChargeX[]" class="form-control">';
-            html+='</div>';
-            html+='<div class="col-md-3 col-item">';
-            html+='<input type="number" value="1" name="freightChargeQX[]" class="form-control">';
-            html+='</div>';
-            html+='<div class="col-md-1 col-item">';
-            html+='<button  type="button" class="btn btn_minus">-</button>';
-            html+='</div>';
-            html+='</div>';
-            html+='</div>';
-        $("#freight_charges").append(html);
-
-          $('#freight_charges .btn_minus').on("click", function (e) {
-            e.preventDefault(); 
-            $(this).parent('div').parent('div').parent('div').remove(); 
-          })
-      });
-
-      $('#freight_charges .btn_minus').on("click", function (e) {
-        e.preventDefault(); 
-        $(this).parent('div').parent('div').parent('div').remove(); 
-      })
-      $("#origin_charges .btn_plus").on("click", function(e){
-        e.preventDefault();
-        var html='<div class="item">';
-            html+='<div class="form-group row">';
-            html+='<div class="col-md-4 col-item">';
-            html+='<input type="text" name="originDescX[]" class="form-control">';
-            html+='</div>';
-            html+='<div class="col-md-3 col-item">';
-            html+='<input type="number" name="originChargeX[]" class="form-control">';
-            html+='</div>';
-            html+='<div class="col-md-3 col-item">';
-            html+='<input type="number" value="1" name="originChargeQX[]" class="form-control">';
-            html+='</div>';
-            html+='<div class="col-md-1 col-item">';
-            html+='<button  type="button" class="btn btn_minus">-</button>';
-            html+='</div>';
-            html+='</div>';
-            html+='</div>';
-        $("#origin_charges").append(html);
-
-          $('#origin_charges .btn_minus').on("click", function (e) {
-            e.preventDefault(); 
-            $(this).parent('div').parent('div').parent('div').remove(); 
-          })
-      });
-      
-      $('#origin_charges .btn_minus').on("click", function (e) {
-        e.preventDefault(); 
-        $(this).parent('div').parent('div').parent('div').remove(); 
-      })
-      $("#destination_charges .btn_plus").on("click", function(e){
-        e.preventDefault();
-        var html='<div class="item">';
-            html+='<div class="form-group row">';
-            html+='<div class="col-md-4 col-item">';
-            html+='<input type="text" name="destinationDescX[]" class="form-control">';
-            html+='</div>';
-            html+='<div class="col-md-3 col-item">';
-            html+='<input type="number" name="destinationChargeX[]" class="form-control">';
-            html+='</div>';
-            html+='<div class="col-md-3 col-item">';
-            html+='<input type="number" value="1" name="destinationChargeQX[]" class="form-control">';
-            html+='</div>';
-            html+='<div class="col-md-1 col-item">';
-            html+='<button  type="button" class="btn btn_minus">-</button>';
-            html+='</div>';
-            html+='</div>';
-            html+='</div>';
-        $("#destination_charges").append(html);
-
-          $('#destination_charges .btn_minus').on("click", function (e) {
-            e.preventDefault(); 
-            $(this).parent('div').parent('div').parent('div').remove(); 
-          })
-      });
-      
-      $('#destination_charges .btn_minus').on("click", function (e) {
-        e.preventDefault(); 
-        $(this).parent('div').parent('div').parent('div').remove(); 
-      })
       //Datemask dd/mm/yyyy
       $("#datemask").inputmask("dd-mm-yyyy", { "placeholder": "dd-mm-yyyy" });
       //Datemask2 mm-dd-yyyy
@@ -1871,8 +2185,19 @@ C. NO INCLUYE SEGURO DE CARGA, NO INCLUYE AGENCIAMIENTO ADUANAL.</textarea>
       //color picker with addon
       $(".my-colorpicker2").colorpicker();
 
+      //Timepicker
+      $(".timepicker").timepicker({
+        showInputs: false
+      });
+    });
 
-    $("#btn-add-state").on("click", function () {
+
+    $(document).ready(function () {
+      $("#state").select2({
+        tags: true
+      });
+
+      $("#btn-add-state").on("click", function () {
         var newStateVal = $("#new-state").val();
         // Set the value, creating a new option if necessary
         if ($("#state").find("option[value='" + newStateVal + "']").length) {
@@ -1884,9 +2209,15 @@ C. NO INCLUYE SEGURO DE CARGA, NO INCLUYE AGENCIAMIENTO ADUANAL.</textarea>
           $("#state").append(newState).trigger('change');
         }
       });
+    });
 
 
-    $("#btn-add-state2").on("click", function () {
+    $(document).ready(function () {
+      $("#state2").select2({
+        tags: true
+      });
+
+      $("#btn-add-state2").on("click", function () {
         var newState2Val = $("#new-state2").val();
         // Set the value, creating a new option if necessary
         if ($("#state2").find("option[value='" + newState2Val + "']").length) {
@@ -1898,8 +2229,14 @@ C. NO INCLUYE SEGURO DE CARGA, NO INCLUYE AGENCIAMIENTO ADUANAL.</textarea>
           $("#state2").append(newState2).trigger('change');
         }
       });
+    });
 
-    $("#btn-add-state3").on("click", function () {
+    $(document).ready(function () {
+      $("#state3").select2({
+        tags: true
+      });
+
+      $("#btn-add-state3").on("click", function () {
         var newState3Val = $("#new-state3").val();
         // Set the value, creating a new option if necessary
         if ($("#state3").find("option[value='" + newState3Val + "']").length) {
@@ -1910,10 +2247,11 @@ C. NO INCLUYE SEGURO DE CARGA, NO INCLUYE AGENCIAMIENTO ADUANAL.</textarea>
           // Append it to the select
           $("#state3").append(newState3).trigger('change');
         }
+      });
     });
 
     //Initialize Select2 Elements
-    
+    $(".select2").select2();
 
 
     jQuery(function ($) {

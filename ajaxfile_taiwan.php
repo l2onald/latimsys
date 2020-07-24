@@ -115,7 +115,6 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
     elseif ($row['status']=='READY TO CONTACT') {$status='<div style="font-weight:600; font-size:9px; color:white; width:80px; padding:5px; border:0.5px solid gray; background:#00c2f0; ">'.$status.'</div>';}
     elseif ($row['status']=='CHECK NOTES') {$status='<div style="font-weight:600; font-size:9px; color:purple; padding:5px;width:80px; border:0.5px solid gray; background:#a62c0d8; ">'.$status.'</div>';}
     else{$status='<div style="font-weight:600; color:black;">'.$status.'</div>';}
-    
     $shipping = $row['customer_city'].'<br><img src="./img/venezuela.png" style="width:40px;">';
     $service=$row['service'];
     if ($service=='') {$service=' ';}
@@ -143,7 +142,7 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
     $consultaWR = mysqli_query($connect, "SELECT * FROM receipt WHERE jobOrderId='".$row['id']."' order by id desc limit 1 ") or die ("Error al traer los Agent");
         while ($rowWR = mysqli_fetch_assoc($consultaWR)){
             $WHReceipt=$rowWR['wr'];
-            $wr.='<a href="https://latim.cargotrack.net/appl2.0/warehouse/detail.asp?id=<?php echo $WHReceipt; ?>&redir=../accounts/warehouse.asp?id=&redir_id=738" target="blank"><i class="fa fa-barcode" style="font-size: 30px;color: black;"></i></a><p>WR#'.$WHReceipt.'</p>';
+            $wr.='<a href="https://latim.cargotrack.net/appl2.0/warehouse/detail.asp?id='.$WHReceipt.'&redir=../accounts/warehouse.asp?id=&redir_id=738" target="blank"><i class="fa fa-barcode" style="font-size: 30px;color: black;"></i></a><p>WR#'.$WHReceipt.'</p>';
         }
         $wr.='<a onclick="addwr('.$row['id'].')" href="#"><button type="button" class="btn btn-secondary btn-sm" style="color:black">ADD WR</button></a>';
     $customer=$row['customer_name'];
@@ -173,7 +172,7 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
         $data[] = array(
                 "fecha"=>date('Y-m-d',$t),
                 "id"=>$row['id'],
-                "customer_name"=>$customer,
+                "customer_name"=>utf8_encode($customer),
                 "supplier_company"=>$supplier_company,
                 "service"=>$service,
                 "customer_city"=>$shipping,

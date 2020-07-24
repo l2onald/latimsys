@@ -159,11 +159,11 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
     $warehouse_receipt = $row['warehouse_receipt'];
     $tracking_number = $row['tracking_number'];
 
-    $status=$row['status'];
-    if ($row['status']=='SOLVED') {$status='<div style="font-weight:600; font-size:9px; color:white; padding:5px;width:80px; border:0.5px solid gray; background:#00a75a; ">'.$status.'</div>';}
-    elseif ($row['status']=='PENDING') {$status='<div style="font-weight:600; font-size:9px; color:white; padding:5px;width:80px; border:0.5px solid gray; background:#db4c39; ">'.$status.'</div>';}
-    else{$status='<div style="font-weight:600; color:black;">'.$status.'</div>';}
-
+    if ($row['status']=='READY TO CONTACT') {$status='<button type="buton" class="btn btn-sm btn-info"><i class="fa fa-info"></i> '.$row['status'].'</button>';}
+    elseif ($row['status']=='PENDING' OR $row['status']=='CANCELED' OR $row['status']=='CHECK NOTES') {$status='<button type="buton" class="btn btn-sm btn-danger"><i class="fa fa-warning"></i> '.$row['status'].'</button>';}
+    elseif ($row['status']=='SHIPPED') {$status='<button type="buton" class="btn btn-sm btn-info"><i class="fa fa-info"></i> '.$row['status'].'</button>';}
+    elseif ($row['status']=='SOLVED') {$status='<button type="buton" class="btn btn-sm btn-success"><i class="fa fa-check"></i> '.$row['status'].'</button>';}
+    elseif ($row['status']=='CARGO SENT') {$status='<button type="buton" class="btn btn-sm btn-success"><i class="fa fa-check"></i> '.$row['status'].'</button>';}
    
     if ($row['service']=='Air door to door' OR $row['service']=='Air Service') {$service_img='<i class="fa fa-plane" style="font-size:24px;"></i>';}
     elseif ($row['service']=='Ocean door to door' OR $row['service']=='Ocean Service') {$service_img='<i class="fa fa-ship" style="font-size:24px;"></i>';}
@@ -198,8 +198,8 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
         $data[] = array(
                 "fecha"=>$row['fecha'],
                 "id"=>$row['id'],
-                "name"=>$row['name'],
-                "supplier"=>$row['supplier'],
+                "name"=>utf8_encode($row['name']),
+                "supplier"=>utf8_encode($row['supplier']),
                 "type"=>$type,
                 "service"=>$service,
                 "agent_name"=>$agent,

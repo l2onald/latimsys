@@ -7,5 +7,4 @@
 // might be a bit redundant but it's safe :) ... I think :)
 	$connect = new mysqli($host,$user,$pass,$db) or die("error" . mysqli_errno($connect));
 	$connect->set_charset("utf8");
-	// Para no tener problema con las tildes ni eñes
 ?>

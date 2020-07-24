@@ -114,6 +114,10 @@ a {
     box-shadow: 0px 2px 2px 1px rgba(194, 192, 194, 0.75);
 }
 
+.btn-danger {
+    background: #B80008 !important;
+}
+
 a:hover,
 a:active,
 a:focus,

@@ -190,7 +190,18 @@ $consultaAgent = mysqli_query($connect, "SELECT * FROM agents WHERE email='$emai
             </ul>
           </li>
 
-
+          <li class=" treeview" style="border-bottom:1px solid gray; padding:5px;">
+          <a href="#" style="height:25px; position:relative; top:-10px;">
+            <i class="fa fa-home"></i> <span style="font-size:11px; ">Warehouse</span>
+            <span class="pull-right-container" style="top:22px;">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li ><a class="" href="createWarehouse.php" style="font-size:11px;"><i class="fa fa-circle-o"></i>Create</a></li>
+            <li><a href="searchAccount.php" style="font-size:11px;"><i class="fa fa-circle-o"></i>Search</a></li>
+          </ul>
+          </li>
           <center><div style="width:100%; height:20px; position:relative; top:0px; background:#CECAC6; color:#630000; font-weight:600; font-size:14px;">JOB ORDERS</div></center>
 
           <li class=" treeview" style="border-bottom:1px solid gray; padding:5px;">

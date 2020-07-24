@@ -11,6 +11,7 @@ $level=$rowAgent['level'];
 ## Read value
 $draw = $_POST['draw'];
 $row = $_POST['start'];
+
 $rowperpage = $_POST['length']; // Rows display per page
 $columnIndex = $_POST['order'][0]['column']; // Column index
 $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
@@ -55,15 +56,15 @@ if($searchValue != ''){
 ## Total number of records without filtering
 if ($level=='Seller') { 
     if ($to!='' && $from!='') {
-        $sel = mysqli_query($connect,"select count(*) as allcount from joborders where agent_email='$email' AND branch='' AND DATE_FORMAT(`fecha`,'%Y-%m-%d') BETWEEN '$from' and '$to' ORDER BY id ASC");
+        $sel = mysqli_query($connect,"select count(*) as allcount from joborders where agent_email='$email' AND (customer_name LIKE '%$search_val%' OR customer_company LIKE '%$search_val%' OR supplier_name LIKE '%$search_val%' OR supplier_company LIKE '%$search_val%' OR id LIKE '%$search_val%') AND branch='' AND DATE_FORMAT(`fecha`,'%Y-%m-%d') BETWEEN '$from' and '$to' ORDER BY id ASC");
     }else{
-        $sel = mysqli_query($connect,"select count(*) as allcount from joborders where agent_email='$email' AND branch='' ORDER BY id ASC");   
+        $sel = mysqli_query($connect,"select count(*) as allcount from joborders where agent_email='$email' AND (customer_name LIKE '%$search_val%' OR customer_company LIKE '%$search_val%' OR supplier_name LIKE '%$search_val%' OR supplier_company LIKE '%$search_val%' OR id LIKE '%$search_val%') AND branch='' ORDER BY id ASC");   
     }
   }elseif($level!='Seller'){
     if ($to!='' && $from!='') {
-        $sel = mysqli_query($connect,"select count(*) as allcount from joborders where  branch='' AND DATE_FORMAT(`fecha`,'%Y-%m-%d') BETWEEN '$from' and '$to' ORDER BY id ASC"); 
+        $sel = mysqli_query($connect,"select count(*) as allcount from joborders where  branch='' AND (customer_name LIKE '%$search_val%' OR customer_company LIKE '%$search_val%' OR supplier_name LIKE '%$search_val%' OR supplier_company LIKE '%$search_val%' OR id LIKE '%$search_val%') AND DATE_FORMAT(`fecha`,'%Y-%m-%d') BETWEEN '$from' and '$to' ORDER BY id ASC"); 
     }else{
-        $sel = mysqli_query($connect,"select count(*) as allcount from joborders where  branch='' ORDER BY id ASC");   
+        $sel = mysqli_query($connect,"select count(*) as allcount from joborders where  branch='' AND (customer_name LIKE '%$search_val%' OR customer_company LIKE '%$search_val%' OR supplier_name LIKE '%$search_val%' OR supplier_company LIKE '%$search_val%' OR id LIKE '%$search_val%') ORDER BY id ASC");   
     }
     
 }
@@ -73,17 +74,17 @@ $totalRecords = $records['allcount'];
 ## Total number of records with filtering
 if ($level=='Seller') { 
     if ($to!='' && $from!='') {
-        $sel = mysqli_query($connect,"select count(*) as allcount from joborders WHERE agent_email='$email' AND branch='' AND DATE_FORMAT(`fecha`,'%Y-%m-%d') BETWEEN '$from' and '$to' and 1 ".$searchQuery." ORDER BY id ASC");
+        $sel = mysqli_query($connect,"select count(*) as allcount from joborders WHERE agent_email='$email' AND branch='' AND (customer_name LIKE '%$search_val%' OR customer_company LIKE '%$search_val%' OR supplier_name LIKE '%$search_val%' OR supplier_company LIKE '%$search_val%' OR id LIKE '%$search_val%') AND DATE_FORMAT(`fecha`,'%Y-%m-%d') BETWEEN '$from' and '$to' and 1 ".$searchQuery." ORDER BY id ASC");
     }else{
-        $sel = mysqli_query($connect,"select count(*) as allcount from joborders WHERE agent_email='$email' AND branch='' and 1 ".$searchQuery." ORDER BY id ASC");   
+        $sel = mysqli_query($connect,"select count(*) as allcount from joborders WHERE agent_email='$email' AND branch='' AND (customer_name LIKE '%$search_val%' OR customer_company LIKE '%$search_val%' OR supplier_name LIKE '%$search_val%' OR supplier_company LIKE '%$search_val%' OR id LIKE '%$search_val%') and 1 ".$searchQuery." ORDER BY id ASC");   
     }
    
   }elseif($level!='Seller'){
     if ($to!='' && $from!='') {
-        $sel = mysqli_query($connect,"select count(*) as allcount from joborders WHERE branch='' AND DATE_FORMAT(`fecha`,'%Y-%m-%d') BETWEEN '$from' and '$to' and 1 ".$searchQuery." ORDER BY id ASC");   
+        $sel = mysqli_query($connect,"select count(*) as allcount from joborders WHERE branch='' AND DATE_FORMAT(`fecha`,'%Y-%m-%d') BETWEEN '$from' and '$to' AND (customer_name LIKE '%$search_val%' OR customer_company LIKE '%$search_val%' OR supplier_name LIKE '%$search_val%' OR supplier_company LIKE '%$search_val%' OR id LIKE '%$search_val%') and 1 ".$searchQuery." ORDER BY id ASC");   
     
     }else{
-        $sel = mysqli_query($connect,"select count(*) as allcount from joborders WHERE branch='' and 1 ".$searchQuery." ORDER BY id ASC");   
+        $sel = mysqli_query($connect,"select count(*) as allcount from joborders WHERE branch='' AND (customer_name LIKE '%$search_val%' OR customer_company LIKE '%$search_val%' OR supplier_name LIKE '%$search_val%' OR supplier_company LIKE '%$search_val%' OR id LIKE '%$search_val%') and 1 ".$searchQuery." ORDER BY id ASC");   
     }
    
 }
@@ -94,18 +95,18 @@ $totalRecordwithFilter = $records['allcount'];
 ## Fetch records
 if ($level=='Seller') { 
     if ($to!='' && $from!='') {
-        $empQuery = "select * from joborders WHERE agent_email='$email' AND branch='' AND DATE_FORMAT(`fecha`,'%Y-%m-%d') BETWEEN '$from' and '$to' and 1 ".$searchQuery." order by ".$columnName." ".$columnSortOrder." limit ".$row.",".$rowperpage;
+        $empQuery = "select * from joborders WHERE agent_email='$email' AND branch='' AND DATE_FORMAT(`fecha`,'%Y-%m-%d') BETWEEN '$from' and '$to' AND (customer_name LIKE '%$search_val%' OR customer_company LIKE '%$search_val%' OR supplier_name LIKE '%$search_val%' OR supplier_company LIKE '%$search_val%' OR id LIKE '%$search_val%') and 1 ".$searchQuery." order by ".$columnName." ".$columnSortOrder." limit ".$row.",".$rowperpage;
 
     }else{
-        $empQuery = "select * from joborders WHERE agent_email='$email' AND branch='' and 1 ".$searchQuery." order by ".$columnName." ".$columnSortOrder." limit ".$row.",".$rowperpage;
+        $empQuery = "select * from joborders WHERE agent_email='$email' AND branch='' AND (customer_name LIKE '%$search_val%' OR customer_company LIKE '%$search_val%' OR supplier_name LIKE '%$search_val%' OR supplier_company LIKE '%$search_val%' OR id LIKE '%$search_val%') and 1 ".$searchQuery." order by ".$columnName." ".$columnSortOrder." limit ".$row.",".$rowperpage;
     }
     
 }elseif($level!='Seller'){
     if ($to!='' && $from!='') {
-        $empQuery = "select * from joborders WHERE branch=''and DATE_FORMAT(`fecha`,'%Y-%m-%d') BETWEEN '$from' and '$to' and 1 ".$searchQuery." order by ".$columnName." ".$columnSortOrder." limit ".$row.",".$rowperpage;    
+        $empQuery = "select * from joborders WHERE branch=''and DATE_FORMAT(`fecha`,'%Y-%m-%d') BETWEEN '$from' and '$to' AND (customer_name LIKE '%$search_val%' OR customer_company LIKE '%$search_val%' OR supplier_name LIKE '%$search_val%' OR supplier_company LIKE '%$search_val%' OR id LIKE '%$search_val%') and 1 ".$searchQuery." order by ".$columnName." ".$columnSortOrder." limit ".$row.",".$rowperpage;    
 
     }else{
-        $empQuery = "select * from joborders WHERE branch='' and 1 ".$searchQuery." order by ".$columnName." ".$columnSortOrder." limit ".$row.",".$rowperpage;    
+        $empQuery = "select * from joborders WHERE branch='' AND (customer_name LIKE '%$search_val%' OR customer_company LIKE '%$search_val%' OR supplier_name LIKE '%$search_val%' OR supplier_company LIKE '%$search_val%' OR id LIKE '%$search_val%') and 1 ".$searchQuery." order by ".$columnName." ".$columnSortOrder." limit ".$row.",".$rowperpage;    
     }
     
 }
@@ -114,8 +115,7 @@ $data = array();
 
 
 while ($row = mysqli_fetch_assoc($empRecords)) {
-
-    $status=$row['status'];
+$status=$row['status'];
     if ($row['status']=='IN WAREHOUSE') {$status='<div style="font-weight:600; font-size:9px; color:white; padding:5px;width:80px; border:0.5px solid gray; background:#00a75a; ">'.$status.'</div>';}
     elseif ($row['status']=='PENDING') {$status='<div style="font-weight:600; font-size:9px; color:white; padding:5px;width:80px; border:0.5px solid gray; background:#db4c39; ">'.$status.'</div>';}
     elseif ($row['status']=='READY TO CONTACT') {$status='<div style="font-weight:600; font-size:9px; color:white; width:80px; padding:5px; border:0.5px solid gray; background:#00c2f0; ">'.$status.'</div>';}
@@ -148,7 +148,7 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
     $consultaWR = mysqli_query($connect, "SELECT * FROM receipt WHERE jobOrderId='".$row['id']."' order by id desc limit 1 ") or die ("Error al traer los Agent");
         while ($rowWR = mysqli_fetch_assoc($consultaWR)){
             $WHReceipt=$rowWR['wr'];
-            $wr.='<a href="https://latim.cargotrack.net/appl2.0/warehouse/detail.asp?id=<?php echo $WHReceipt; ?>&redir=../accounts/warehouse.asp?id=&redir_id=738" target="blank"><i class="fa fa-barcode" style="font-size: 30px;color: black;"></i></a><p>WR#'.$WHReceipt.'</p>';
+            $wr.='<a href="https://latim.cargotrack.net/appl2.0/warehouse/detail.asp?id='.$WHReceipt.'&redir=../accounts/warehouse.asp?id=&redir_id=738" target="blank"><i class="fa fa-barcode" style="font-size: 30px;color: black;"></i></a><p>WR#'.$WHReceipt.'</p>';
         }
         $wr.='<a onclick="addwr('.$row['id'].')" href="#"><button type="button" class="btn btn-secondary btn-sm" style="color:black">ADD WR</button></a>';
     $customer=$row['customer_name'];
@@ -178,7 +178,7 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
         $data[] = array(
                 "fecha"=>date('Y-m-d',$t),
                 "id"=>$row['id'],
-                "customer_name"=>$customer,
+                "customer_name"=>utf8_encode($customer),
                 "supplier_company"=>$supplier_company,
                 "service"=>$service,
                 "customer_city"=>$shipping,
