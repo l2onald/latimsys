@@ -28,10 +28,22 @@ $queryModel = mysqli_query($connect, "INSERT INTO accounts(agent, company, name,
                 VALUES ('$agent_name', '$company', '$name', '$address_1', '$address_2', '$city', '$state', '$country', '$telf1', '$telf2', '$qq', '$wechat', '$email', '$type', '$fecha', '$branch')")
 or die ("<meta http-equiv=\"refresh\" content=\"0;URL= ../createWarehouse.php?step=1&message=Error\">");
 
-if ($name!=''){ $company .= ' | '.$name; } 
-
-
-echo "<meta http-equiv=\"refresh\" content=\"0;URL= ../createWarehouse.php?step=1\">";
+$accounts_id=mysqli_insert_id($connect);
+	$html='';
+	$consulta = mysqli_query($connect, "SELECT * FROM accounts where type='Client' or type='Agent' order by id ")
+	or die ("Error al traer los Agent");
+	while ($row = mysqli_fetch_array($consulta)){
+		$ID=$row['id'];
+		$name=$row['name'];
+		$company=$row['company'];
+		$city=$row['city'];
+		if($accounts_id==$ID){
+			$html.='<option selected value="'.$ID.'">'.$ID.' '.$name.' / '.$company.' '.$city.'</option>';
+		}else{
+			$html.='<option  value="'.$ID.'">'.$ID.' '.$name.' / '.$company.' '.$city.'</option>';
+		}
+	}
+	echo $html;
 
 
  ?>

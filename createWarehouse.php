@@ -390,7 +390,7 @@ $email = $_SESSION['username'];
               <h3 style="text-align:center; color:black; font-weight:400; padding:20px; font-size:20px; border-bottom:1px solid #555555;">CREATE WAREHOUSE RECEIPT</h3>
             </div>
           </div>
-          <form action="action/savewaresthousestep1.php?step=2" method="post">
+          <form action="action/savewaresthousestep1.php?step=2" id="step1_form"  method="post">
             <div class="row" style="margin:30px 0px">
               <div class="col-md-6">   
                 <div class="form-group row">
@@ -1940,6 +1940,95 @@ $email = $_SESSION['username'];
           $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         }
     );
+    $("#myModal1 form").submit(function(e){
+      event.preventDefault(); 
+      var post_url = $(this).attr("action"); //get form action url
+      var form_data = $(this).serialize(); //Encode form elements for submission                            
+      $.post( post_url, form_data, function( response ) {     
+          $("#step1_form select[name='supplier_id']").html(response);
+          clear1();                          
+          $("#myModal1").modal('hide');
+          swal({
+              title: "Supplier!",
+              text: "New Supplier created successful!",
+              icon: "success",
+          });
+      });
+    })
+    function clear1(){
+      $("#myModal1 input[name='company']").val('');
+      $("#myModal1 input[name='name']").val('');
+      $("#myModal1 input[name='address_1']").val('');
+      $("#myModal1 input[name='address_2']").val('');
+      $("#myModal1 input[name='city']").val('');
+      $("#myModal1 input[name='state']").val('');
+      $("#myModal1 input[name='country']").val('');
+      $("#myModal1 input[name='telf1']").val('');
+      $("#myModal1 input[name='telf2']").val('');
+      $("#myModal1 input[name='qq']").val('');
+      $("#myModal1 input[name='wechat']").val('');
+      $("#myModal1 input[name='email']").val('');
+    }
+    $("#myModal2 form").submit(function(e){
+      event.preventDefault(); 
+      var post_url = $(this).attr("action"); //get form action url
+      var form_data = $(this).serialize(); //Encode form elements for submission                            
+      $.post( post_url, form_data, function( response ) {     
+          $("#step1_form select[name='bill_id']").html(response);                          
+          $("#myModal2").modal('hide');
+          clear2();      
+          swal({
+              title: "Client!",
+              text: "New Client created successful!",
+              icon: "success",
+          });
+      });
+    })
+    function clear2(){
+      $("#myModal2 input[name='agent_name']").val('');
+      $("#myModal2 input[name='company']").val('');
+      $("#myModal2 input[name='name']").val('');
+      $("#myModal2 input[name='address_1']").val('');
+      $("#myModal2 input[name='address_2']").val('');
+      $("#myModal2 input[name='city']").val('');
+      $("#myModal2 input[name='state']").val('');
+      $("#myModal2 input[name='country']").val('');
+      $("#myModal2 input[name='telf1']").val('');
+      $("#myModal2 input[name='telf2']").val('');
+      $("#myModal2 input[name='qq']").val('');
+      $("#myModal2 input[name='wechat']").val('');
+      $("#myModal2 input[name='email']").val('');
+    }
+    $("#myModal3 form").submit(function(e){
+      event.preventDefault(); 
+      var post_url = $(this).attr("action"); //get form action url
+      var form_data = $(this).serialize(); //Encode form elements for submission                            
+      $.post( post_url, form_data, function( response ) {     
+          $("#step1_form select[name='consignee_id']").html(response);                          
+          $("#myModal3").modal('hide');
+          clear3();      
+          swal({
+              title: "Consignee!",
+              text: "New Consignee created successful!",
+              icon: "success",
+          });
+      });
+    })
+    function clear3(){
+      $("#myModal3 input[name='agent_name']").val('');
+      $("#myModal3 input[name='company']").val('');
+      $("#myModal3 input[name='name']").val('');
+      $("#myModal3 input[name='address_1']").val('');
+      $("#myModal3 input[name='address_2']").val('');
+      $("#myModal3 input[name='city']").val('');
+      $("#myModal3 input[name='state']").val('');
+      $("#myModal3 input[name='country']").val('');
+      $("#myModal3 input[name='telf1']").val('');
+      $("#myModal3 input[name='telf2']").val('');
+      $("#myModal3 input[name='qq']").val('');
+      $("#myModal3 input[name='wechat']").val('');
+      $("#myModal3 input[name='email']").val('');
+    }
     $("#by_boxes_content .btn_plus").on("click", function(e){
         e.preventDefault();
         var html='<div class="item col">';
