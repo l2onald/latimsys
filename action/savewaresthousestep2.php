@@ -11,29 +11,35 @@
 		$byBoxes_weightX=$_POST['byBoxes_weightX'];
 
 		$ruta="../images/warehouse/";//ruta carpeta donde queremos copiar las imágenes     
-		
-        $uploadfile_temporal1=$_FILES['image_file']['tmp_name'];
-        $extension1 = pathinfo($_FILES['image_file']['name'], PATHINFO_EXTENSION);
-        $filename=$_FILES['image_file']['name'];
-        $path_parts = pathinfo($filename);
-        $filename= $path_parts['filename'];
+        $uploadfile=[];
+        foreach($_FILES['image_file']['name'] as $key=>$item){
+            $uploadfile_temporal1=$_FILES['image_file']['tmp_name'][$key];
+            $extension1 = pathinfo($_FILES['image_file']['name'][$key], PATHINFO_EXTENSION);
+            $filename=$_FILES['image_file']['name'][$key];
+            $path_parts = pathinfo($filename);
+            $filename= $path_parts['filename'];
+            if ($uploadfile_temporal1=='') {
+            }else{
+                $uploadfile_nombre1=$ruta.time().$filename.'.'.$extension1; 
 
-    if ($uploadfile_temporal1=='') {
-    }else{
-        $uploadfile_nombre1=$ruta.time().$filename.'.'.$extension1; 
 
-
-        if (is_uploaded_file($uploadfile_temporal1)) 
-        { 
-            move_uploaded_file($uploadfile_temporal1,$uploadfile_nombre1); 
-        } 
+                if (is_uploaded_file($uploadfile_temporal1)) 
+                { 
+                    move_uploaded_file($uploadfile_temporal1,$uploadfile_nombre1); 
+                } 
         
-	}
+            }
+            array_push($uploadfile,$uploadfile_nombre1);
+            
+        }
+
+    
 	$total_pieces=$_POST['total_pieces'];
 	$total_weight=$_POST['total_weight'];
 	$total_volume=$_POST['total_volume'];
-	$total_charg_weight=$_POST['total_charg_weight'];
-	$queryModel = mysqli_query($connect, "UPDATE warehouse SET image_url='$uploadfile_nombre1',total_pieces='$total_pieces',total_weight='$total_weight',total_volume='$total_volume',total_charg_weight='$total_charg_weight' WHERE id='$warehouse_id' ") or die ('error');
+    $total_charg_weight=$_POST['total_charg_weight'];
+    $uploadfile=json_encode($uploadfile);
+	$queryModel = mysqli_query($connect, "UPDATE warehouse SET image_url='$uploadfile',total_pieces='$total_pieces',total_weight='$total_weight',total_volume='$total_volume',total_charg_weight='$total_charg_weight' WHERE id='$warehouse_id' ") or die ('error');
 	
 	if(isset($_POST['byBoxes_piecesx']) && !empty($_POST['byBoxes_piecesx'])){
         $queryModel = mysqli_query($connect, "DELETE FROM warehousecontents WHERE warehouse_id='$warehouse_id' and type=''");  

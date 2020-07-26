@@ -139,22 +139,37 @@ $email = $_SESSION['username'];
     width:34.19px
 }
 .file-upload-wrapper {
-    border: 1px solid rgba(0,0,0,0.03);
+    border: 1px dotted;
     height: 200px;
     background: rgba(0,0,0,0.03);
     border-radius: 17px;
     box-shadow: 0 2px 1px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+.file-upload-wrapper:hover{
+  border: 2px dotted green;
 }
 #input-file-now{
-    height: 100%;
     width: 100%;
+    height: 100%;
+    opacity: 0;
+    /* overflow: hidden; */
     position: absolute;
-    top: 40%;
-    left: 30%;
 }
+.upload-icon{
+    font-size: 100px;
+      top: calc(50% - 50px);
+      position: absolute;
+      z-index: 1000;
+      left: calc(50% - 50px);
+      cursor: pointer;
+  }
+  .upload-icon:hover{
+    font-size: 105px;
+  }
 </style>
 </head>
-<body class="hold-transition sidebar-mini">
+<body  >
 
 
 
@@ -428,6 +443,30 @@ $email = $_SESSION['username'];
                 <div class="form-group row">
                   <div class="col-md-12">
                     <div class="input-group">
+                      <span class="input-group-addon span_custom">Consignee</span>
+                      <select name="consignee_id" id="" class="form-control select2" data-placeholder="Select Consignee" style="width:100%" required>
+                          <option value="">--Select Consignee--</option>
+                        <?php 
+                          $consulta = mysqli_query($connect, "SELECT * FROM accounts where type='Client' or type='Agent' order by id ")
+                          or die ("Error al traer los Agent");
+                           while ($row = mysqli_fetch_array($consulta)){
+                      
+                              $ID=$row['id'];
+                              $name=$row['name'];
+                              $company=$row['company'];
+                              $city=$row['city'];
+                            
+                        ?>
+                          <option value="<?php echo $ID; ?>"><?php echo $ID; ?> <?php echo $name; ?>/<?php echo $company; ?> <?php echo $city; ?></option>
+                           <?php } ?>
+                        </select>
+                      <span class="input-group-addon add_btn"><button type="button"  class="btn btn-danger" data-toggle="modal" data-target="#myModal3"><i class="fa fa-plus"></i>&nbsp;Add</button></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <div class="input-group">
                       <span class="input-group-addon span_custom">Agent</span>
                       <select name="agent_id" id="" class="form-control select2" data-placeholder="Select Agent" style="width:100%" >
                           <option value="">--Select Agent--</option>
@@ -469,30 +508,7 @@ $email = $_SESSION['username'];
                     </div>
                   </div>
                 </div>
-                <div class="form-group row">
-                  <div class="col-md-12">
-                    <div class="input-group">
-                      <span class="input-group-addon span_custom">Consignee</span>
-                      <select name="consignee_id" id="" class="form-control select2" data-placeholder="Select Consignee" style="width:100%" required>
-                          <option value="">--Select Consignee--</option>
-                        <?php 
-                          $consulta = mysqli_query($connect, "SELECT * FROM accounts where type='Client' or type='Agent' order by id ")
-                          or die ("Error al traer los Agent");
-                           while ($row = mysqli_fetch_array($consulta)){
-                      
-                              $ID=$row['id'];
-                              $name=$row['name'];
-                              $company=$row['company'];
-                              $city=$row['city'];
-                            
-                        ?>
-                          <option value="<?php echo $ID; ?>"><?php echo $ID; ?> <?php echo $name; ?>/<?php echo $company; ?> <?php echo $city; ?></option>
-                           <?php } ?>
-                        </select>
-                      <span class="input-group-addon add_btn"><button type="button"  class="btn btn-danger" data-toggle="modal" data-target="#myModal3"><i class="fa fa-plus"></i>&nbsp;Add</button></span>
-                    </div>
-                  </div>
-                </div>
+                
                 <div class="form-group row">
                   <div class="col-md-12">
                     <div class="input-group">
@@ -1832,10 +1848,31 @@ $email = $_SESSION['username'];
               </table>
             </div>
           </div>
+          <style>
+          
+          </style>
           <div class="row" style="margin-top:20px; margin-bottom:20px">
             <div class="col-md-offset-2 col-md-8">
               <div class="file-upload-wrapper">
-                <input type="file" id="input-file-now" name="image_file" class="file-upload" required />
+              <input type="file" id="input-file-now" name="image_file[]" class="file-upload" required  multiple/>
+                <i class="fa fa-cloud-upload upload-icon"></i><br>
+                <div style="    width: 100%;
+                    height: 100%;
+                    align-items: center;
+                    text-align: center;
+                    align-content: center;
+                    margin: auto;
+                    justify-content: center;
+                    display: grid;
+                    margin-top: 30px;">
+                  
+                  <label for="input-file-now" style="color: #0f3c4b;font-weight: inherit;font-size: 16px;">
+                    <strong>Choose a file</strong>
+                    <span> or drag it here</span><br>
+                    
+                  </label>
+                </div>
+                
               </div>
             </div>
           </div>
@@ -1894,7 +1931,6 @@ $email = $_SESSION['username'];
           </div>
           <div class="row" style="margin-bottom:30px">
             <div class="col-md-12 text-right">
-              <button type="button" class="btn btn-danger btn-calculator"><i class="fa fa-calculator"></i>&nbsp;Calculator</button>
               <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Save</button>
             </div>
           </div>
@@ -1907,9 +1943,13 @@ $email = $_SESSION['username'];
 </div>
 
 <script>
+ 
   $(function () {
     //Initialize Select2 Elements
- 
+    $(".file-upload-wrapper").click(function() {
+        $("input[id='input-file-now']").click();
+    });
+
     $(".select2").select2();
 
     //Datemask dd/mm/yyyy
@@ -2003,15 +2043,27 @@ $email = $_SESSION['username'];
       event.preventDefault(); 
       var post_url = $(this).attr("action"); //get form action url
       var form_data = $(this).serialize(); //Encode form elements for submission                            
-      $.post( post_url, form_data, function( response ) {     
-          $("#step1_form select[name='consignee_id']").html(response);                          
-          $("#myModal3").modal('hide');
-          clear3();      
-          swal({
-              title: "Consignee!",
-              text: "New Consignee created successful!",
-              icon: "success",
-          });
+      $.post( post_url, form_data, function( response ) {    
+        console.log(JSON.parse(response));
+          var data=JSON.parse(response);
+          if(data.status){                          
+            $("#myModal3").modal('hide');
+            clear3();      
+            swal({
+                title: "Consignee!",
+                text: "New Password is "+data.password,
+                icon: "success",
+            });
+            $("#step1_form select[name='consignee_id']").html(data.html);        
+            $("#step1_form select[name='bill_id']").html(data.html);     
+          }else{
+              swal({
+              title: "Waring!",
+              text: data.html,
+              icon: "error",
+            });
+          }
+       
       });
     })
     function clear3(){
@@ -2053,10 +2105,15 @@ $email = $_SESSION['username'];
             html+='</div>';
             html+='</div>';
             html+='</div>';
+           
         $("#by_boxes_content").append(html);
+          $("#by_boxes_content input[name='byBoxes_weightX[]']").keypress(function(e){
+              total_calculator();
+            })
           $('#by_boxes_content .btn_minus').on("click", function (e) {
             e.preventDefault(); 
             $(this).parent('div').parent('div').parent('div').remove(); 
+            total_calculator();
           })
       });
 
@@ -2065,6 +2122,9 @@ $email = $_SESSION['username'];
         $(this).parent('div').parent('div').parent('div').remove(); 
         total_calculator();
       })
+    $("#by_boxes_content input[name='byBoxes_weightX[]']").keypress(function(e){
+      total_calculator();
+    })
     //Date picker
     $('#datepicker').datepicker({
       autoclose: true
@@ -2073,9 +2133,7 @@ $email = $_SESSION['username'];
     $(".my-colorpicker1").colorpicker();
     //color picker with addon
     $(".my-colorpicker2").colorpicker();
-    $(".btn-calculator").on("click",function(e){
-      total_calculator();
-    });
+   
     function total_calculator(){
       var total_pieces=0,total_weight=0, total_volume=0;
       $("#by_boxes_content .col").each(function(index,ele){

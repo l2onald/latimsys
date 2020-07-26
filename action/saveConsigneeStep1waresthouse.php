@@ -25,23 +25,59 @@
 	$mail_password=password_generate(6);
 	
 	$password = trim($_POST["password"]);
-	// $param_username=$_POST['email'];;
-	$sql = "INSERT INTO users (username, password) VALUES (?, ?)";
-	if($stmt = mysqli_prepare($connect, $sql)){
-		// Bind variables to the prepared statement as parameters
-		mysqli_stmt_bind_param($stmt, "ss", $email, $password);		
-		$username = $email;
-		$password = password_hash($password, PASSWORD_DEFAULT);
-
-		if(mysqli_stmt_execute($stmt)){
-			$to = $email;
-			$subject = "New account";
-			$txt = "Your password id".$mail_password;
-			$headers = "From: webmaster@example.com" . "\r\n" .
-			"CC: somebodyelse@example.com";			
-			mail($to,$subject,$txt,$headers);
+	
+	
+        // Prepare a select statement
+	$result = mysqli_query($connect, "SELECT * FROM users where username='$email'") ;
+	if(mysqli_num_rows($result) == 1){
+		$username_err = "This username is already taken.";
+		$data['status']=false;
+		$data['html']=$username_err;
+		echo json_encode($data);
+	} else{
+		$sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+		if($stmt = mysqli_prepare($connect, $sql)){
+			// Bind variables to the prepared statement as parameters
+			mysqli_stmt_bind_param($stmt, "ss", $email, $password);		
+			$username = $email;
+			$password = password_hash($password, PASSWORD_DEFAULT);
+	
+			if(mysqli_stmt_execute($stmt)){
+				$to = $email;
+				$subject = "New account";
+				$txt = "Your password id".$mail_password;
+				$headers = "From: no-reply@latimcargo.com";			
+				mail($to,$subject,$txt,$headers);
+			}
+	
+			$queryModel = mysqli_query($connect, "INSERT INTO agents(name, phone, email, picture, level) VALUES ('$name','$telf1', '$email', ' ', 'Client')") or die ("<meta http-equiv=\"refresh\" content=\"0;URL= ../createWarehouse.php?step=1&message=Error\">");
+	
+			$queryModel = mysqli_query($connect, "INSERT INTO accounts(agent, company, name, address_1, address_2, city, state, country, telf1, telf2, qq, wechat, email, type, fecha, branch) 
+							VALUES ('$agent_name', '$company', '$name', '$address_1', '$address_2', '$city', '$state', '$country', '$telf1', '$telf2', '$qq', '$wechat', '$email', '$type', '$fecha', '$branch')")
+			or die ("<meta http-equiv=\"refresh\" content=\"0;URL= ../createWarehouse.php?step=1&message=Error\">");
+				$accounts_id=mysqli_insert_id($connect);
+				$html='';
+				$consulta = mysqli_query($connect, "SELECT * FROM accounts where type='Client' or type='Agent' order by id ")
+				or die ("Error al traer los Agent");
+				while ($row = mysqli_fetch_array($consulta)){
+					$ID=$row['id'];
+					$name=$row['name'];
+					$company=$row['company'];
+					$city=$row['city'];
+					if($accounts_id==$ID){
+						$html.='<option selected value="'.$ID.'">'.$ID.' '.$name.' / '.$company.' '.$city.'</option>';
+					}else{
+						$html.='<option  value="'.$ID.'">'.$ID.' '.$name.' / '.$company.' '.$city.'</option>';
+					}
+				}
+				$data['status']=true;
+				$data['html']=$html;
+				$data['password']=$mail_password;
+				echo json_encode($data);
 		}
 	}
+			
+	
 	 
 
 
@@ -53,27 +89,7 @@
 
 
 
-$queryModel = mysqli_query($connect, "INSERT INTO agents(name, phone, email, picture, level) VALUES ('$name','$telf1', '$email', ' ', 'Client')") or die ("<meta http-equiv=\"refresh\" content=\"0;URL= ../createWarehouse.php?step=1&message=Error\">");
 
-$queryModel = mysqli_query($connect, "INSERT INTO accounts(agent, company, name, address_1, address_2, city, state, country, telf1, telf2, qq, wechat, email, type, fecha, branch) 
-                VALUES ('$agent_name', '$company', '$name', '$address_1', '$address_2', '$city', '$state', '$country', '$telf1', '$telf2', '$qq', '$wechat', '$email', '$type', '$fecha', '$branch')")
-or die ("<meta http-equiv=\"refresh\" content=\"0;URL= ../createWarehouse.php?step=1&message=Error\">");
-	$accounts_id=mysqli_insert_id($connect);
-	$html='';
-	$consulta = mysqli_query($connect, "SELECT * FROM accounts where type='Client' or type='Agent' order by id ")
-	or die ("Error al traer los Agent");
-	while ($row = mysqli_fetch_array($consulta)){
-		$ID=$row['id'];
-		$name=$row['name'];
-		$company=$row['company'];
-		$city=$row['city'];
-		if($accounts_id==$ID){
-			$html.='<option selected value="'.$ID.'">'.$ID.' '.$name.' / '.$company.' '.$city.'</option>';
-		}else{
-			$html.='<option  value="'.$ID.'">'.$ID.' '.$name.' / '.$company.' '.$city.'</option>';
-		}
-	}
-	echo $html;
 
 
  ?>
