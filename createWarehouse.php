@@ -167,6 +167,7 @@ $email = $_SESSION['username'];
   .upload-icon:hover{
     font-size: 105px;
   }
+
 </style>
 </head>
 <body  >
@@ -300,7 +301,7 @@ $email = $_SESSION['username'];
           </a>
           <ul class="treeview-menu">
             <li ><a class="active" href="createWarehouse.php" style="font-size:11px;"><i class="fa fa-circle-o"></i>Create</a></li>
-            <li><a href="searchAccount.php" style="font-size:11px;"><i class="fa fa-circle-o"></i>Search</a></li>
+            <li><a href="searchWarehouse.php" style="font-size:11px;"><i class="fa fa-circle-o"></i>Search</a></li>
           </ul>
         </li>
 
@@ -560,7 +561,7 @@ $email = $_SESSION['username'];
                   <div class="col-md-12">
                     <div class="input-group">
                       <span class="input-group-addon span_custom">Tracking</span>
-                        <textarea name="tracking" id="" cols="30" rows="2" class="form-control"></textarea>
+                        <input name="tracking" type="text"  class="form-control">
                     </div>
                   </div>
                 </div>
@@ -2044,7 +2045,6 @@ $email = $_SESSION['username'];
       var post_url = $(this).attr("action"); //get form action url
       var form_data = $(this).serialize(); //Encode form elements for submission                            
       $.post( post_url, form_data, function( response ) {    
-        console.log(JSON.parse(response));
           var data=JSON.parse(response);
           if(data.status){                          
             $("#myModal3").modal('hide');

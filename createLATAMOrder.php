@@ -305,7 +305,7 @@ box-shadow: 0px 2px 2px 1px rgba(194,192,194,0.75);
             </a>
             <ul class="treeview-menu">
                 <li ><a class="" href="createWarehouse.php" style="font-size:11px;"><i class="fa fa-circle-o"></i>Create</a></li>
-                <li><a href="searchAccount.php" style="font-size:11px;"><i class="fa fa-circle-o"></i>Search</a></li>
+            <li><a href="searchWarehouse.php" style="font-size:11px;"><i class="fa fa-circle-o"></i>Search</a></li>
             </ul>
         </li>
 
