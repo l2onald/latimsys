@@ -102,13 +102,21 @@ $consultaAgent = mysqli_query($connect, "SELECT * FROM agents WHERE email='$emai
             <!-- User Account: style can be found in dropdown.less -->
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color:white;">
-                <img src="<?php echo $picture; ?>" class="user-image" alt="User Image">
+                <?php if($picture){ ?>
+            <img src="<?php echo $picture; ?>" class="user-image" alt="User Image">
+            <?php }else{ ?>
+              <img src="./images/17-1.jpg" class="user-image" alt="User Image">
+            <?php }?>
                 <span class="hidden-xs"><?php echo $agent_name; ?></span>
               </a>
               <ul class="dropdown-menu shadow2">
                 <!-- User image -->
                 <li class="user-header" >
-                  <img src="<?php echo $picture; ?>" class="img-circle" alt="User Image">
+                  <?php if($picture){ ?>
+                    <img src="<?php echo $picture; ?>" class="img-circle" alt="User Image">
+                    <?php }else{ ?>
+                      <img src="./images/17-1.jpg" class="img-circle" alt="User Image">
+                  <?php }?>
 
                   <p style="color:black;">
                     <?php echo $agent_name; ?> | <?php echo $level; ?>
@@ -136,7 +144,12 @@ $consultaAgent = mysqli_query($connect, "SELECT * FROM agents WHERE email='$emai
         <!-- Sidebar user panel -->
         <div class="user-panel">
           <div class="pull-left image">
+            <?php if($picture){ ?>
             <img src="<?php echo $picture; ?>" class="img-circle" alt="User Image">
+            <?php }else{ ?>
+              <img src="./images/17-1.jpg" class="img-circle" alt="User Image">
+            <?php }?>
+            
           </div>
           <div class="pull-left info">
             <p style="color:#e0e0e0;"><?php echo $agent_name; ?></p>
