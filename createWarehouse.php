@@ -2119,7 +2119,7 @@ $email = $_SESSION['username'];
             html+='</div>';
            
         $("#by_boxes_content").append(html);
-          $("#by_boxes_content input[name='byBoxes_weightX[]']").keypress(function(e){
+          $("#by_boxes_content input[name='byBoxes_weightX[]']").keyup(function(e){
               total_calculator();
             })
           $('#by_boxes_content .btn_minus').on("click", function (e) {
@@ -2134,7 +2134,7 @@ $email = $_SESSION['username'];
         $(this).parent('div').parent('div').parent('div').remove(); 
         total_calculator();
       })
-    $("#by_boxes_content input[name='byBoxes_weightX[]']").keypress(function(e){
+    $("#by_boxes_content input[name='byBoxes_weightX[]']").keyup(function(e){
       total_calculator();
     })
     //Date picker
